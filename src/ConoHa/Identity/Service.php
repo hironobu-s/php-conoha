@@ -2,7 +2,8 @@
 
 namespace ConoHa\Identity;
 
-use Guzzle\Http\ClientInterface;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Client;
 use ConoHa\Resource\Secret;
 use ConoHa\Resource\Token;
 use ConoHa\Common\ApiClient;
@@ -14,13 +15,6 @@ class Service extends BaseService
 
     public function tokens(Secret $secret)
     {
-        // work
-        $config = [
-            'base_uri' => 'https://identity.tyo1.conoha.io',
-        ];
-
-        $c = new ApiClient($config);
-
         $auth = [
             'auth' => [
                 'passwordCredentials' => [
@@ -32,17 +26,13 @@ class Service extends BaseService
         ];
         $json = json_encode($auth);
 
-        $res = $c->post('/v2.0/tokens', ['body' => $json, 'debug' => true]);
-        $body = $res->getBody();
-        $c = $body->getContents();
-        $json = json_decode($c);
-
-        if( !$c || !$json) {
-            throw new Exception('ResponseError');
-        }
+        $res = $this->getClient()->post($this->getUri('tokens'), [
+            'body' => $json,
+            'debug' => false
+        ]);
 
         $token = new Token();
-        $token->populate($json->access->token);
+        $token->populate($res);
 
         return $token;
     }

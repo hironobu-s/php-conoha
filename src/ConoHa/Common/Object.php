@@ -13,7 +13,19 @@ abstract class Object {
     // Properties
     protected $properties = [];
 
-    public function __call($name, $args) {
+    public function bulkSet($params)
+    {
+        foreach($params as $name => $value) {
+            if(isset($this->{$name})) {
+                $this->{$name} = $value;
+            }
+        }
+    }
+
+    // auto setter and getter
+    private $init = false;
+    public function __call($name, $args)
+    {
         if( ! preg_match('/^(get|set)([A-Z].*)/', $name, $m)) {
             throw new \BadMethodCallException('Undefined method [' . $name . ']');
         }
@@ -30,25 +42,15 @@ abstract class Object {
         }
     }
 
-    public function populate($mixed)
+    public static function snake2Camel($name)
     {
-        if( ! is_array($mixed)) {
-            throw new InvalidArgumentException('The argument cannot be array access.');
-        }
-
-        foreach($mixed as $name => $value) {
-            $method = 'set' . self::snake2Camel($name);
-            $this->{$method}($value);
-        }
-    }
-
-    public static function snake2Camel($name) {
         $name = nametr($name, '_', ' ');
         $name = ucwords($name);
         return str_replace(' ', '', $name);
     }
 
-    public static function camel2Snake($name) {
+    public static function camel2Snake($name)
+    {
         $name = preg_replace('/[A-Z]/', '_\0', $name);
         $name = strtolower($name);
         return ltrim($name, '_');

@@ -7,12 +7,12 @@ use ConoHa\Common\Object;
 class Secret extends Object
 {
     protected $properties = [
-        'username' => null,
-        'password' => null,
+        'username'    => null,
+        'password'    => null,
         'tenant_name' => null,
-        'tenant_id' => null,
-        'auth_url' => null,
-        'region' => null
+        'tenant_id'   => null,
+        'auth_url'    => null,
+        'region'      => null,
     ];
 
     // protected $username;

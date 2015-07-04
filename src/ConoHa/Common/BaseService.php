@@ -2,19 +2,20 @@
 
 namespace ConoHa\Common;
 
-use ConoHa\Common\ApiClient;
+use ConoHa\Api\Client;
 use ConoHa\Resource\Token;
 
-class BaseService extends Object{
-
-    protected $client;
+abstract class BaseService extends Object
+{
     protected $token;
 
-    public function __construct() {
-        $this->client = new ApiClient();
+    public function __construct($endpoint)
+    {
+        $this->setEndpoint($endpoint);
     }
 
-    public function setToken(Token $token) {
+    public function setToken(Token $token)
+    {
         $this->token = $token;
     }
 
@@ -29,7 +30,33 @@ class BaseService extends Object{
     // public function setApiClient(ApiClient　$client) {
     // }
 
-    public function getApiClient() {
-        return $this->client;
+    public function getClient()
+    {
+        $client = new Client(['http_errors' => false]);
+        return $client;
+        // $stack = new HandlerStack();
+        // $stack->setHandler(new CurlHandler());
+        // $stack->push(
     }
+
+    protected $endpoint;
+    public function setEndpoint($endpoint)
+    {
+        $this->endpoint = $endpoint;
+    }
+
+    public function getEndpoint()
+    {
+        return $this->endpoint;
+    }
+
+    public function getUri($path = null)
+    {
+        $endpoint = $this->getEndpoint();
+        if($path) {
+            $endpoint .= '/' . $path;
+        }
+        return $endpoint;
+    }
+
 }
