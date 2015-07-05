@@ -1,6 +1,6 @@
 <?php
 
-namespace ConoHa\Resource;
+namespace ConoHa\Identity\Resource;
 
 use ConoHa\Common\BaseResource;
 use ConoHa\Api\Response;

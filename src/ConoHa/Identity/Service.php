@@ -4,8 +4,8 @@ namespace ConoHa\Identity;
 
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Client;
-use ConoHa\Resource\Secret;
-use ConoHa\Resource\Token;
+use ConoHa\Identity\Resource\Secret;
+use ConoHa\Identity\Resource\Token;
 use ConoHa\Common\ApiClient;
 use ConoHa\Common\BaseService;
 

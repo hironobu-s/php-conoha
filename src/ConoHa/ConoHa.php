@@ -3,8 +3,8 @@
 namespace ConoHa;
 
 use ConoHa\Common\Object;
-use ConoHa\Resource\Secret;
-use ConoHa\Resource\Token;
+use ConoHa\Identity\Resource\Secret;
+use ConoHa\Identity\Resource\Token;
 use ConoHa\Identity\Service as IdentityService;
 
 class ConoHa extends Object {

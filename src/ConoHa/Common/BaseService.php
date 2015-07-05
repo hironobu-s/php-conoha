@@ -58,5 +58,4 @@ abstract class BaseService extends Object
         }
         return $endpoint;
     }
-
 }
