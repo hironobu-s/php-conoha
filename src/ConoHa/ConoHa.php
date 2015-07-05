@@ -4,12 +4,12 @@ namespace ConoHa;
 
 use ConoHa\Common\Object;
 use ConoHa\Identity\Resource\Secret;
-use ConoHa\Identity\Resource\Token;
+use ConoHa\Identity\Resource\Access;
 use ConoHa\Identity\Service as IdentityService;
 
 class ConoHa extends Object {
 
-    private $token;
+    private $access;
     private $identity_endpoint;
     public function __construct($identity_endpoint)
     {
@@ -19,16 +19,16 @@ class ConoHa extends Object {
     public function auth(Secret $secret)
     {
         $ident = $this->getIdentityService();
-        $this->token = $ident->tokens($secret);
+        $this->access = $ident->tokens($secret);
 
-        return true;
+        return $this->access;
     }
 
     public function getIdentityService()
     {
         $s = new IdentityService($this->identity_endpoint);
-        if($this->token instanceof Token) {
-            $s->setToken($this->token);
+        if($this->access instanceof Access) {
+            $s->setToken($this->access->getToken());
         }
         return $s;
     }

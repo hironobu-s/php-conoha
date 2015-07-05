@@ -3,7 +3,7 @@
 namespace ConoHa\Identity;
 
 use ConoHa\Identity\Resource\Secret;
-use ConoHa\Identity\Resource\Token;
+use ConoHa\Identity\Resource\Access;
 use ConoHa\Common\ApiClient;
 use ConoHa\Common\BaseService;
 
@@ -29,9 +29,9 @@ class Service extends BaseService
             'debug' => false
         ]);
 
-        $token = new Token();
-        $token->populate($res);
+        $access = new Access();
+        $access->populate($res->getJson());
 
-        return $token;
+        return $access;
     }
 }

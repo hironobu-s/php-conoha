@@ -30,13 +30,15 @@ class Response extends Object
             $this->properties[$name] = $value;
         }
 
+        // parse response
+        $this->parseResponse($response);
+
         // http error
         if($this->getHttpCode() >= 300) {
-            $msg = $json->error->message;
+            $msg = $this->getJson()->error->message;
             throw new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $this->getHttpCode(), $msg));
         }
 
-        $this->parseResponse($response);
     }
 
     private function parseResponse($response)

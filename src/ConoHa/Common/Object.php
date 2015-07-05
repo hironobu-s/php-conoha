@@ -13,14 +13,14 @@ abstract class Object {
     // Properties
     protected $properties = [];
 
-    public function bulkSet($params)
-    {
-        foreach($params as $name => $value) {
-            if(isset($this->{$name})) {
-                $this->{$name} = $value;
-            }
-        }
-    }
+    // public function bulkSet($params)
+    // {
+    //     foreach($params as $name => $value) {
+    //         if(isset($this->{$name})) {
+    //             $this->{$name} = $value;
+    //         }
+    //     }
+    // }
 
     // auto setter and getter
     private $init = false;

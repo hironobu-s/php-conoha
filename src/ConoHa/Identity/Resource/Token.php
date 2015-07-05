@@ -14,13 +14,8 @@ class Token extends BaseResource
         'issued_at' => null,
     ];
 
-    public function populate(Response $res)
+    public function populate(\StdClass $json)
     {
-        $json = $res->getJson();
-        if( ! $json) {
-            throw new PopulateException("Could't populate with the response data.");
-        }
-
         $this->setId($json->access->token->id);
         $this->setExpires($json->access->token->expires);
         $this->setIssuedAt($json->access->token->issued_at);

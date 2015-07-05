@@ -3,7 +3,7 @@
 namespace ConoHa\Common;
 
 use ConoHa\Api\Client;
-use ConoHa\Resource\Token;
+use ConoHa\Identity\Resource\Token;
 
 abstract class BaseService extends Object
 {
