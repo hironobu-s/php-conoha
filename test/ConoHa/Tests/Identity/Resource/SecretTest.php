@@ -1,8 +1,8 @@
 <?php
 
-namespace ConoHa\Tests\Common;
+namespace ConoHa\Tests\Identity\Resource;
 
-use ConoHa\Resource\Secret;
+use ConoHa\Identity\Resource\Secret;
 
 class SecretTest extends \PHPUnit_Framework_TestCase
 {
