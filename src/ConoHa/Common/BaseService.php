@@ -51,7 +51,9 @@ abstract class BaseService extends Object
     public function getUri($path = null)
     {
         $endpoint = $this->getEndpoint();
-        if($path) {
+        if(is_array($path)) {
+            $endpoint .= '/' . join('/', $path);
+        } else if($path) {
             $endpoint .= '/' . $path;
         }
         return $endpoint;
