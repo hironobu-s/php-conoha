@@ -44,7 +44,7 @@ abstract class Object {
 
     public static function snake2Camel($name)
     {
-        $name = nametr($name, '_', ' ');
+        $name = strtr($name, '_', ' ');
         $name = ucwords($name);
         return str_replace(' ', '', $name);
     }
