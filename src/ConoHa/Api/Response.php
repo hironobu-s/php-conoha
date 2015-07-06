@@ -49,6 +49,8 @@ class Response extends Object
 
         if($this->getContentType() == 'application/json') {
             $this->properties['json'] = json_decode($this->properties['body'], false);
+        } else {
+            $this->properties['json'] = "";
         }
     }
 }
