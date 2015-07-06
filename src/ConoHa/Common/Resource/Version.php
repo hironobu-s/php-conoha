@@ -16,6 +16,12 @@ class Version extends BaseResource
 
     public function populate(\StdClass $json)
     {
+        // 上位がVersionsクラスの場合はこのプロパティは存在しないが、
+        // Versionを単独でAPIを叩いた場合は存在する。
+        if(isset($json->version)) {
+            $json = $json->version;
+        }
+
         $this->properties['id'] = $json->id;
         $this->properties['status'] = $json->status;
         $this->properties['updated'] = $json->updated;

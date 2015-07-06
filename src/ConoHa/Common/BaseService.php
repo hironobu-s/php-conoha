@@ -5,6 +5,7 @@ namespace ConoHa\Common;
 use ConoHa\Api\Client;
 use ConoHa\Identity\Resource\Token;
 use ConoHa\Common\Resource\Versions;
+use ConoHa\Common\Resource\Version;
 
 abstract class BaseService extends Object
 {
@@ -64,6 +65,15 @@ abstract class BaseService extends Object
         $res = $this->getClient()->get($this->getUri());
 
         $v = new Versions();
+        $v->populate($res->getJson());
+        return $v;
+    }
+
+    public function getVersion($version)
+    {
+        $res = $this->getClient()->get($this->getUri($version));
+
+        $v = new Version();
         $v->populate($res->getJson());
         return $v;
     }
