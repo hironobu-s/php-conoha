@@ -21,20 +21,4 @@ class SecretTest extends \PHPUnit_Framework_TestCase
         $s->getTenantName();
         $s->getTenantId();
     }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededWrite() {
-        $s = new Secret();
-        $s->setApiUsername2("value");
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededRead() {
-        $s = new Secret();
-        $v = $s->getUsername2();
-    }
 }

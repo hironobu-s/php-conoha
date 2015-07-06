@@ -30,20 +30,4 @@ class TokenTest extends \PHPUnit_Framework_TestCase
         $d = new \DateTime($date);
         $this->assertEquals($d->diff($expires)->format('%s'), 0);
     }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededWrite() {
-        $s = new Token();
-        $s->setUndefinedMethod("value");
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededRead() {
-        $s = new Token();
-        $v = $s->getUndefinedMethod();
-    }
 }
