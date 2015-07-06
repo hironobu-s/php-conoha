@@ -7,8 +7,8 @@ use ConoHa\Identity\Resource\Secret;
 use ConoHa\Identity\Resource\Access;
 use ConoHa\Identity\Service as IdentityService;
 
-class ConoHa extends Object {
-
+class ConoHa extends Object
+{
     private $access;
     private $identity_endpoint;
     public function __construct($identity_endpoint)
