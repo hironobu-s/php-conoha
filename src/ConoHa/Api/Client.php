@@ -36,7 +36,7 @@ class Client {
     private function send($method, $args)
     {
         $url = $args[0];
-        $options = $args[1] ?: [];
+        $options = isset($args[1]) ? $args[1] : [];
 
         $curl = $this->initializeCurl($method, $url, $options);
 
