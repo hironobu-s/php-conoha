@@ -6,6 +6,7 @@ use ConoHa\Identity\Resource\Secret;
 use ConoHa\Identity\Resource\Access;
 use ConoHa\Common\ApiClient;
 use ConoHa\Common\BaseService;
+use ConoHa\Exception\ServiceNotFoundException;
 
 class Service extends BaseService
 {
@@ -13,6 +14,11 @@ class Service extends BaseService
 
     public function tokens(Secret $secret)
     {
+        $version = $this->getStableVersion();
+        if(!$version) {
+            throw new ServiceNotFoundException('Stable version identity service is not found.');
+        }
+
         $auth = [
             'auth' => [
                 'passwordCredentials' => [
@@ -24,7 +30,7 @@ class Service extends BaseService
         ];
         $json = json_encode($auth);
 
-        $res = $this->getClient()->post($this->getUri('tokens'), [
+        $res = $this->getClient()->post($this->getUri([$version->getId(), 'tokens']), [
             'body' => $json,
             'debug' => false
         ]);

@@ -77,4 +77,16 @@ abstract class BaseService extends Object
         $v->populate($res->getJson());
         return $v;
     }
+
+    public function getStableVersion()
+    {
+        $version = null;
+        $versions = $this->getVersions();
+        foreach($versions as $v) {
+            if($v->getStatus() == 'stable') {
+                $version = $v;
+            }
+        }
+        return $version;
+    }
 }
