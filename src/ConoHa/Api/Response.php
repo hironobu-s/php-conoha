@@ -12,7 +12,11 @@ class Response extends Object
     private $body;
     private $json;
 
-    protected $properties = [];
+    protected $properties = [
+        'headers' => [],
+        'body' => null,
+        'json' => null,
+    ];
 
     public function __construct($curl, $response)
     {
@@ -35,7 +39,12 @@ class Response extends Object
 
         // http error
         if($this->getHttpCode() >= 400) {
-            $msg = $this->getJson()->error->message;
+            $json = $this->getJson();
+            if($json) {
+                $msg = $json->error->message;
+            } else {
+                $msg = $this->getBody();
+            }
             throw new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $this->getHttpCode(), $msg));
         }
     }
