@@ -10,7 +10,7 @@ class Version extends BaseResource
         'id' => null,
         'status' => null,
         'updated' => null,
-        'media-types' => [],
+        'media_types' => [],
         'links' => [],
     ];
 
@@ -25,7 +25,7 @@ class Version extends BaseResource
         $this->properties['id'] = $json->id;
         $this->properties['status'] = $json->status;
         $this->properties['updated'] = new \DateTime($json->updated);
-        $this->properties['media-types'] = $json->{'media-types'};
+        $this->properties['media_types'] = $json->{'media-types'};
         $this->properties['links'] = $json->links;
     }
 }
