@@ -4,13 +4,7 @@ namespace ConoHa\Api;
 
 use ConoHa\Exception\HttpErrorException;
 
-//class ApiClient extends Client {
 class Client {
-
-    // public function __construct($config = [])
-    // {
-    //     parent::__construct($config);
-    // }
 
     public function getDefaultUserAgent()
     {
@@ -22,7 +16,6 @@ class Client {
      * 0 => url
      * 1 => options
      */
-
     public function __call($method, $args)
     {
         return $this->send($method, $args);
