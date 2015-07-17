@@ -47,6 +47,14 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $obj->getUndefinedMethod();
     }
 
+    /**
+     * @expectedException BadMethodCallException
+     */
+    public function testUndefinedMethod() {
+        $obj = new TestObject();
+        $obj->hoge("fuga");
+    }
+
     public function testSnake2Camel()
     {
         $obj = new TestObject();
