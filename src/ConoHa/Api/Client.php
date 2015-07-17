@@ -74,13 +74,18 @@ class Client {
         }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
+        // debug
+        if(isset($options['debug']) && $options['debug']) {
+            curl_setopt($curl, CURLOPT_VERBOSE, true);
+        }
+
         // other options
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($curl, CURLOPT_HEADER, true);
-        curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+        //curl_setopt($curl, CURLINFO_HEADER_OUT, true);
         return $curl;
     }
 }
