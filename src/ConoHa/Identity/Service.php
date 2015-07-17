@@ -32,7 +32,6 @@ class Service extends BaseService
 
         $res = $this->getClient()->post($this->getUri([$version->getId(), 'tokens']), [
             'body' => $json,
-            'debug' => false
         ]);
 
         $access = new Access();
