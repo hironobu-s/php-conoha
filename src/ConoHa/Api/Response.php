@@ -45,7 +45,10 @@ class Response extends Object
             } else {
                 $msg = $this->getBody();
             }
-            throw new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $this->getHttpCode(), $msg));
+
+            $ex = new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $this->getHttpCode(), $msg));
+            $ex->setLastResponse($this);
+            throw $ex;
         }
     }
 
