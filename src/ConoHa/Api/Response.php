@@ -71,7 +71,10 @@ class Response extends Object
 
         $this->properties['body'] = substr($response, $header_size);
 
-        if($this->getHeaders()['content-type'] == 'application/json') {
+        if(
+            isset($this->getHeaders()['content-type']) &&
+            $this->getHeaders()['content-type'] == 'application/json'
+        ) {
             $this->properties['json'] = json_decode($this->properties['body'], false);
         } else {
             $this->properties['json'] = "";
