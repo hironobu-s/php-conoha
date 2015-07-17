@@ -79,6 +79,11 @@ class Client {
         // デバッグを有効にする場合はCURLINFO_HEADER_OUTをOFFにする。
         if(isset($options['debug']) && $options['debug']) {
             curl_setopt($curl, CURLOPT_VERBOSE, true);
+
+            if(is_resource($options['debug'])) {
+                curl_setopt($curl, CURLOPT_STDERR, $options['debug']);
+            }
+
         } else {
             curl_setopt($curl, CURLINFO_HEADER_OUT, true);
         }
