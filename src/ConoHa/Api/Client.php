@@ -75,8 +75,12 @@ class Client {
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
         // debug
+        // CURLOPT_VERBOSE と　CURLINFO_HEADER_OUT は排他利用のようなので、
+        // デバッグを有効にする場合はCURLINFO_HEADER_OUTをOFFにする。
         if(isset($options['debug']) && $options['debug']) {
             curl_setopt($curl, CURLOPT_VERBOSE, true);
+        } else {
+            curl_setopt($curl, CURLINFO_HEADER_OUT, true);
         }
 
         // other options
@@ -85,7 +89,7 @@ class Client {
         curl_setopt($curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($curl, CURLOPT_HEADER, true);
-        //curl_setopt($curl, CURLINFO_HEADER_OUT, true);
+
         return $curl;
     }
 }
