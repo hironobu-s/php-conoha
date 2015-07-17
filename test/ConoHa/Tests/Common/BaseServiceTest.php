@@ -57,4 +57,14 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
         $v = $this->service->getVersion("v2.0");
         $this->assertInstanceOf('ConoHa\Common\Resource\Version', $v);
     }
+
+    public function testGetStableVersion()
+    {
+        if(!API_TEST) {
+            return ;
+        }
+
+        $v = $this->service->getStableVersion();
+        $this->assertInstanceOf('ConoHa\Common\Resource\Version', $v);
+    }
 }
