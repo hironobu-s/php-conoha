@@ -59,7 +59,7 @@ class Client {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $options['body']);
                 }
                 break;
-            defualt:
+            default:
                 throw new HttpErrorException('Unknown http method. [' . $method . ']');
         }
 
