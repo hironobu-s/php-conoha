@@ -32,7 +32,7 @@ class Secret extends Object
             $scheme = 'https';
         }
 
-        $endpoint_url = sprintf('%s://%s/', $scheme, $info['host']);
+        $endpoint_url = sprintf('%s://%s', $scheme, $info['host']);
 
         $this->properties['auth_url'] = $endpoint_url;
     }
