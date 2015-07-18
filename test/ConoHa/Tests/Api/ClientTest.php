@@ -36,7 +36,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $url = TEST_IDENTITY_ENDPOINT;
         $res = $this->client->get($url);
 
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $res->getUrl());
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $res->getUrl());
 
         $requests = $res->getRequestHeader();
         $this->assertStringStartsWith("GET", $requests);
@@ -61,7 +61,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $res = $ex->getLastResponse();
         }
 
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $res->getUrl());
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $res->getUrl());
 
         $requests = $res->getRequestHeader();
         $this->assertStringStartsWith("POST", $requests);
