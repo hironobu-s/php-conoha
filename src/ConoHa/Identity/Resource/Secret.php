@@ -25,14 +25,18 @@ class Secret extends Object
             throw new IncorrectUrlException("URL format is incorrect[$url].");
         }
 
-        if(!isset($info['scheme'])) {
+        if(isset($info['scheme'])) {
             $scheme = $info['scheme'];
         } else {
             // 省略された場合はhttpsを決め打ち
             $scheme = 'https';
         }
 
-        $endpoint_url = sprintf('%s://%s', $scheme, $info['host']);
+        if(isset($info['host'])) {
+            $endpoint_url = sprintf('%s://%s', $scheme, $info['host']);
+        } else {
+            throw new IncorrectUrlException("URL format is incorrect[$url].");
+        }
 
         $this->properties['auth_url'] = $endpoint_url;
     }
