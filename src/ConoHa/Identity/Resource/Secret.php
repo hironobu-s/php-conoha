@@ -21,9 +21,6 @@ class Secret extends Object
         // Endpoint URLのパス部分(バージョンなど)を削除
         // バージョンは getVersion() で内部的に取得するので不要
         $info = parse_url($url);
-        if(!$info) {
-            throw new IncorrectUrlException("URL format is incorrect[$url].");
-        }
 
         if(isset($info['scheme'])) {
             $scheme = $info['scheme'];
