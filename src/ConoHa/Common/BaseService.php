@@ -35,6 +35,10 @@ abstract class BaseService extends Object
     public function getClient()
     {
         $client = new Client(['http_errors' => false]);
+        if($this->token instanceof Token) {
+            $client->setApiToken($this->token->getId());
+        }
+
         return $client;
     }
 
