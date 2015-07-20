@@ -4,6 +4,7 @@ namespace ConoHa\Identity\Resource;
 
 use ConoHa\Common\BaseResource;
 use ConoHa\Api\Response;
+use ConoHa\Exception\PopulateException;
 
 class ServiceCatalog extends BaseResource
 {
@@ -16,23 +17,17 @@ class ServiceCatalog extends BaseResource
 
     public function populate(\StdClass $json)
     {
-        if(!isset($json->access->serviceCatalog)) {
-           throw new PopulateException("Object does not has a property. [serviceCatalog]");
-        }
+        $this->setType($json->type);
+        $this->setName($json->name);
 
-        foreach($json->access->serviceCatalog as $catalog) {
-            $this->setType($catalog->type);
-            $this->setName($catalog->name);
-
-            $endpoints = [];
-            foreach($catalog->endpoints as $endpoint) {
-                $e = new Endpoint();
-                $e->setPublicUrl($endpoint->publicURL);
-                $e->setRegion($endpoint->region);
-                $endpoints[] = $e;
-            }
-            $this->setEndpoints($endpoints);
-            $this->setEndpointLinks([]);
+        $endpoints = [];
+        foreach($json->endpoints as $endpoint) {
+            $e = new Endpoint();
+            $e->setPublicUrl($endpoint->publicURL);
+            $e->setRegion($endpoint->region);
+            $endpoints[] = $e;
         }
+        $this->setEndpoints($endpoints);
+        $this->setEndpointLinks([]);
     }
 }
