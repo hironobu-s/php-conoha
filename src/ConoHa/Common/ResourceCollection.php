@@ -2,7 +2,14 @@
 
 namespace ConoHa\Common;
 
-abstract class ResourceCollection extends \ArrayIterator
+class ResourceCollection extends \ArrayIterator
 {
-    abstract public function populate(\StdClass $res);
+    public function fill($class, array $items)
+    {
+        foreach($items as $json) {
+            $r = clone $class;
+            $r->populate($json);
+            $this->append($r);
+        }
+    }
 }
