@@ -40,8 +40,10 @@ class Response extends Object
         // http error
         if($this->getHttpCode() >= 400) {
             $json = $this->getJson();
-            if($json) {
+            if(isset($json->error->message)) {
                 $msg = $json->error->message;
+            } else if(isset($json->unauthorized->message)) {
+                $msg = $json->unauthorized->message;
             } else {
                 $msg = $this->getBody();
             }
