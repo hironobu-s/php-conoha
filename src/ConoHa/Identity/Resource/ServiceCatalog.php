@@ -8,9 +8,10 @@ use ConoHa\Api\Response;
 class ServiceCatalog extends BaseResource
 {
     protected $properties = [
-        'endpoints' => null,
-        'name'      => null,
-        'type'      => null,
+        'endpoints'       => null,
+        'endpoint_links' => null,
+        'name'            => null,
+        'type'            => null,
     ];
 
     public function populate(\StdClass $json)
@@ -31,6 +32,7 @@ class ServiceCatalog extends BaseResource
                 $endpoints[] = $e;
             }
             $this->setEndpoints($endpoints);
+            $this->setEndpointLinks([]);
         }
     }
 }
