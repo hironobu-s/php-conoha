@@ -6,6 +6,8 @@ use ConoHa\Common\Object;
 use ConoHa\Identity\Resource\Secret;
 use ConoHa\Identity\Resource\Access;
 use ConoHa\Identity\Service as IdentityService;
+use ConoHa\Account\Service as AccountService;
+use ConoHa\Exception\ServiceNotFoundException;
 
 class ConoHa extends Object
 {
@@ -37,6 +39,25 @@ class ConoHa extends Object
         } else {
             throw new InvalidArgumentException('The endpoint url is required if auth() method does not called.');
         }
+
+        return $s;
+    }
+
+    public function getAccountService()
+    {
+        if(!($this->access instanceof Access)) {
+            throw new \InvalidArgumentException('The endpoint url is required if auth() method does not called.');
+        }
+
+        $catalog = $this->access->getCatalogByType('account');
+        if(!$catalog) {
+            throw new ServiceNotFoundException('Catalog type "account" is not found in this system.');
+        }
+
+        $endpoint = $catalog->getEndpoints()[0]->getPublicUrl();
+
+        $s = new AccountService($endpoint);
+        $s->setToken($this->access->getToken());
 
         return $s;
     }
