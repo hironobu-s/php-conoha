@@ -41,4 +41,14 @@ class Access extends Object
         $this->service_catalog = new ResourceCollection();
         $this->service_catalog->fill($r, $json->access->serviceCatalog);
     }
+
+    public function getCatalogByType($type)
+    {
+        foreach($this->getServiceCatalog() as $catalog) {
+            if($catalog->getType() == $type) {
+                return $catalog;
+            }
+        }
+        return null;
+    }
 }
