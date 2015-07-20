@@ -6,6 +6,8 @@ use ConoHa\Exception\HttpErrorException;
 
 class Client {
 
+    private $token;
+
     public function getDefaultUserAgent()
     {
         return "PHP-ConoHa API Client";
@@ -19,6 +21,11 @@ class Client {
     public function __call($method, $args)
     {
         return $this->send($method, $args);
+    }
+
+    public function setApiToken($token)
+    {
+        $this->token = $token;
     }
 
     protected function getUserAgent()
@@ -67,6 +74,12 @@ class Client {
         $headers = [
             'User-Agent: ' . $this->getUserAgent(),
         ];
+
+
+        if($this->token) {
+            $headers[] = 'X-Auth-Token: ' . $this->token;
+        }
+
         if(isset($options['headers']) && is_array($options['headers'])) {
             foreach($options['headers'] as $k => $v) {
                 $headers[] = "$k: $v";
