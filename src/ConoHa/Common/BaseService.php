@@ -64,9 +64,10 @@ abstract class BaseService extends Object
     {
         $res = $this->getClient()->get($this->getUri());
 
-        $v = new Versions();
-        $v->populate($res->getJson());
-        return $v;
+        $v = new Version();
+        $collection = new ResourceCollection();
+        $collection->fill($v, $res->getJson()->versions->values);
+        return $collection;
     }
 
     public function getVersion($version)

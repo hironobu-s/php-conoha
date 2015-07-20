@@ -5,7 +5,7 @@ namespace ConoHa\Tests\Identity\Resource;
 use ConoHa\ConoHa;
 use ConoHa\Api\Client;
 use ConoHa\Identity\Resource\Token;
-use ConoHa\Identity\Resource\ServiceCatalog;
+use ConoHa\Common\ResourceCollection;
 use ConoHa\Identity\Resource\Access;
 
 class AccessTest extends \PHPUnit_Framework_TestCase
@@ -26,7 +26,9 @@ class AccessTest extends \PHPUnit_Framework_TestCase
 
     public function testGetServiceCatalog()
     {
-        $this->assertInstanceOf('ConoHa\Identity\Resource\ServiceCatalog', self::$access->getServiceCatalog());
+        $catalog = self::$access->getServiceCatalog();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $catalog);
+        $this->assertInstanceOf('ConoHa\Identity\Resource\ServiceCatalog', $catalog[0]);
     }
 
     public function testSetToken()
@@ -38,9 +40,9 @@ class AccessTest extends \PHPUnit_Framework_TestCase
 
     public function testSetServiceCatalog()
     {
-        $sc = new ServiceCatalog();
-        $ret = self::$access->setServiceCatalog($sc);
-        $this->assertInstanceOf('ConoHa\Identity\Resource\ServiceCatalog', $ret);
+        $col = new ResourceCollection();
+        $ret = self::$access->setServiceCatalog($col);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $ret);
     }
 
     public function testPopulate()
