@@ -25,5 +25,25 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         if(count($col) > 0) {
             $this->assertInstanceOf('ConoHa\Account\Resource\OrderItem', $col[0]);
         }
+
+        return $col;
+    }
+
+    /**
+     * API側に不具合があるため、実装はしたがまだテストはしない
+     *
+     * @depends testOrderItems
+     */
+    public function testOrderItem($col)
+    {
+        if(count($col) == 0) {
+            return;
+        }
+        //$item = $col[0];
+        //$detail = self::$service->orderItem($item->getUuId());
+        // $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        // if(count($col) > 0) {
+        //     $this->assertInstanceOf('ConoHa\Account\Resource\OrderItem', $col[0]);
+        // }
     }
 }
