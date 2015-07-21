@@ -13,6 +13,13 @@ class SecretTest extends \PHPUnit_Framework_TestCase
         $s->setTenantName(TEST_API_TENANT_NAME);
         $s->setTenantId(TEST_API_TENANT_ID);
         $s->setAuthUrl(TEST_IDENTITY_ENDPOINT);
+
+
+        $this->assertEquals(TEST_API_USERNAME, $s->getUsername());
+        $this->assertEquals(TEST_API_PASSWORD, $s->getPassword());
+        $this->assertEquals(TEST_API_TENANT_NAME, $s->getTenantName());
+        $this->assertEquals(TEST_API_TENANT_ID, $s->getTenantId());
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $s->getAuthUrl());
     }
 
     public function testNoSchemeUrl() {
@@ -30,14 +37,5 @@ class SecretTest extends \PHPUnit_Framework_TestCase
     public function testInvalidUrl() {
         $s = new Secret();
         $s->setAuthUrl("invalid url");
-    }
-
-    public function testGetter() {
-        $s = new Secret();
-        $s->getUsername();
-        $s->getPassword();
-        $s->getTenantName();
-        $s->getTenantId();
-        $s->getAuthUrl();
     }
 }
