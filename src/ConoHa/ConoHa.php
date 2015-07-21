@@ -27,6 +27,11 @@ class ConoHa extends Object
         return $this->access;
     }
 
+    public function setAccess(Access $access)
+    {
+        $this->access = $access;
+    }
+
     public function getIdentityService($endpoint = null)
     {
         if($this->access instanceof Access) {
