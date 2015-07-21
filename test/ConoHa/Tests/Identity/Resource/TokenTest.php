@@ -8,16 +8,13 @@ class TokenTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetter() {
         $s = new Token();
-        $s->setId("value");
-        $s->setExpires("2015-01-01");
-        $s->setIssuedAt("value");
-    }
+        $s->setId('test-id');
+        $s->setExpires('2015-01-01');
+        $s->setIssuedAt('test-issued-at');
 
-    public function testGetter() {
-        $s = new Token();
-        $s->getId();
-        $s->getExpires();
-        $s->getIssuedAt();
+        $this->assertEquals('test-id', $s->getId());
+        $this->assertInstanceOf('\DateTime', $s->getExpires());
+        $this->assertEquals('test-issued-at', $s->getIssuedAt());
     }
 
     public function testExpires() {

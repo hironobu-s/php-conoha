@@ -6,15 +6,13 @@ use ConoHa\Identity\Resource\Endpoint;
 
 class EndpointTest extends \PHPUnit_Framework_TestCase
 {
-    public function testSetter() {
+    public function testSetterGetter()
+    {
         $s = new Endpoint();
-        $s->setRegion("value");
-        $s->setPublicUrl("value");
-    }
+        $s->setRegion("test-region");
+        $s->setPublicUrl("test-public-url");
 
-    public function testGetter() {
-        $s = new Endpoint();
-        $s->getRegion();
-        $s->getPublicUrl();
+        $this->assertEquals("test-region", $s->getRegion());
+        $this->assertEquals("test-public-url", $s->getPublicUrl());
     }
 }
