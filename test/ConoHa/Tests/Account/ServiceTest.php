@@ -46,4 +46,22 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         //     $this->assertInstanceOf('ConoHa\Account\Resource\OrderItem', $col[0]);
         // }
     }
+
+    /**
+     * API側に不具合があるため、実装はしたがまだテストはしない
+     */
+    public function testProductItems()
+    {
+        // $col = self::$service->productItems();
+        // print_r($col);
+    }
+
+    public function testPaymentHistory()
+    {
+        $col = self::$service->paymentHistory();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        if(count($col) > 0) {
+            $this->assertInstanceOf('ConoHa\Account\Resource\PaymentHistory', $col[0]);
+        }
+    }
 }
