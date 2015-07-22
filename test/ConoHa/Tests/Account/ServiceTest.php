@@ -71,4 +71,11 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('\DateTime', $col[0]->getReceivedDate());
         }
     }
+
+    public function testPaymentSummary()
+    {
+        $item = self::$service->paymentSummary();
+        $this->assertInstanceOf('ConoHa\Account\Resource\PaymentSummary', $item);
+        $this->assertInternalType('integer', $item->getTotalDepositAmount());
+    }
 }

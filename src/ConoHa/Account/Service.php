@@ -7,6 +7,7 @@ use ConoHa\Common\ResourceCollection;
 use ConoHa\Account\Resource\OrderItem;
 use ConoHa\Account\Resource\ProductItem;
 use ConoHa\Account\Resource\PaymentHistory;
+use ConoHa\Account\Resource\PaymentSummary;
 
 /**
  * ConoHa Account(Billing) Service.
@@ -99,5 +100,23 @@ class Service extends BaseService
 
         $col->fill($item, $res->getJson()->payment_history);
         return $col;
+    }
+
+    /**
+     * 入金のサマリーを取得する
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-payment-summary.html
+     *
+     * @return \ConoHa\Account\Resource\PaymentSummary
+     */
+    public function paymentSummary()
+    {
+        $res = $this->getClient()->get($this->getUri('payment-summary'));
+
+        $item = new PaymentSummary();
+        $item->populate($res->getJson()->payment_summary);
+
+        return $item;
     }
 }
