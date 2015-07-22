@@ -66,6 +66,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
         if(count($col) > 0) {
             $this->assertInstanceOf('ConoHa\Account\Resource\PaymentHistory', $col[0]);
+            $this->assertNotNull($col[0]->getMoneyType());
+            $this->assertInternalType('integer', $col[0]->getDepositAmount());
+            $this->assertInstanceOf('\DateTime', $col[0]->getReceivedDate());
         }
     }
 }
