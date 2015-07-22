@@ -3,10 +3,13 @@
 namespace ConoHa\Tests\Api;
 
 use ConoHa\Api\Client;
+use ConoHa\Api\Response;
+use ConoHa\Exception\HttpErrorException;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
-    protected $client;
+    private $client;
+    private $curl;
     public function setup()
     {
         $this->client = new Client();
@@ -36,10 +39,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $url = TEST_IDENTITY_ENDPOINT;
         $res = $this->client->get($url);
 
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $res->getUrl());
-
-        $requests = $res->getRequestHeader();
-        $this->assertStringStartsWith("GET", $requests);
+        $curl = __get_curl_resource($res);
+        $info = curl_getinfo($curl);
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $info['url']);
+        $this->assertStringStartsWith("GET", $info['request_header']);
     }
 
     public function testSendRequestWidhContent()
@@ -56,17 +59,18 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
             $res = $this->client->post($url, $options);
 
-        } catch(\Exception $ex) {
+        } catch(HttpErrorException $ex) {
             // Exception throwed becase request might failed with 405 Method not allowed.
             $res = $ex->getLastResponse();
         }
 
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $res->getUrl());
-
-        $requests = $res->getRequestHeader();
-        $this->assertStringStartsWith("POST", $requests);
-        $this->assertContains("Content-Length: 13", $requests);
-        $this->assertContains("Content-Type: application/x-www-form-urlencoded", $requests);
+        $curl = __get_curl_resource($res);
+        $info = curl_getinfo($curl);
+        $header = $info['request_header'];
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $info['url']);
+        $this->assertStringStartsWith("POST", $header);
+        $this->assertContains("Content-Length: 13", $header);
+        $this->assertContains("Content-Type: application/x-www-form-urlencoded", $header);
     }
 
     public function testSendRequestWithCustomHeaders()
@@ -82,11 +86,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                 'X-CustomHeaderTest2' => 'fuga',
             ]
         ];
+
         $res = $this->client->get($url, $options);
 
-        $requests = $res->getRequestHeader();
-        $this->assertContains("X-CustomHeaderTest1: hoge", $requests);
-        $this->assertContains("X-CustomHeaderTest2: fuga", $requests);
+        $curl = __get_curl_resource($res);
+        $info = curl_getinfo($curl);
+        $header = $info['request_header'];
+        $this->assertContains("X-CustomHeaderTest1: hoge", $header);
+        $this->assertContains("X-CustomHeaderTest2: fuga", $header);
     }
 
     public function testSendRequestWithDebug()

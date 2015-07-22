@@ -6,11 +6,34 @@ use ConoHa\Common\Object;
 
 class TestObject extends Object
 {
-    protected $properties = [
-        'prop1' => null,
-        'prop_test2' => null,
-        'prop_test_no3' => null,
-    ];
+    private $prop1;
+    private $prop_test2;
+    private $prop_test_no3;
+    public function setProp1($prop1)
+    {
+        $this->prop1 = $prop1;
+    }
+    public function getProp1()
+    {
+        return $this->prop1;
+    }
+    public function setPropTest2($prop_test2)
+    {
+        $this->prop_test2 = $prop_test2;
+    }
+    public function getPropTest2()
+    {
+        return $this->prop_test2;
+    }
+    public function setPropTestNo3($prop_test_no3)
+    {
+        $this->prop_test_no3 = $prop_test_no3;
+    }
+    public function getPropTestNo3()
+    {
+        return $this->prop_test_no3;
+    }
+
 }
 
 class ObjectTest extends \PHPUnit_Framework_TestCase
@@ -29,49 +52,5 @@ class ObjectTest extends \PHPUnit_Framework_TestCase
         $obj->getProp1();
         $obj->getPropTest2();
         $obj->getPropTestNo3();
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededWrite() {
-        $obj = new TestObject();
-        $obj->setUndefinedMethod("value");
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinededRead() {
-        $obj = new TestObject();
-        $obj->getUndefinedMethod();
-    }
-
-    /**
-     * @expectedException BadMethodCallException
-     */
-    public function testUndefinedMethod() {
-        $obj = new TestObject();
-        $obj->hoge("fuga");
-    }
-
-    public function testSnake2Camel()
-    {
-        $obj = new TestObject();
-
-        $before = 'foo_bar_baz';
-        $after  = 'FooBarBaz';
-        $result = $obj->snake2Camel($before);
-        $this->assertEquals($result, $after);
-    }
-
-    public function testCamel2Snake()
-    {
-        $obj = new TestObject();
-
-        $before  = 'FooBarBaz';
-        $after = 'foo_bar_baz';
-        $result = $obj->camel2Snake($before);
-        $this->assertEquals($result, $after);
     }
 }

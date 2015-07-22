@@ -8,6 +8,24 @@ require __DIR__ . '/constants.php';
 
 define('ROOT_TEST_DIR', __DIR__ . '/ConoHa/');
 
+
+/**
+ * HTTPリクエスト/レスポンスの内部状態を知るために、
+ * Response食らう素の$curlにアクセスできるようにする
+ *
+ * @param \ConoHa\Api\Response $res
+ * @return resource
+ */
+function __get_curl_resource(\ConoHa\Api\Response $res)
+{
+    $ref = new \ReflectionClass(get_class($res));
+    $prop = $ref->getproperty('curl');
+    $prop->setAccessible(true);
+
+    $curl = $prop->getValue($res);
+    return $curl;
+}
+
 function __get_test_secret()
 {
     $secret = new Secret();

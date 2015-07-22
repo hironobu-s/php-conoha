@@ -7,15 +7,136 @@ use ConoHa\Exception\IncorrectUrlException;
 
 class Secret extends Object
 {
-    protected $properties = [
-        'username'    => null,
-        'password'    => null,
-        'tenant_name' => null,
-        'tenant_id'   => null,
-        'auth_url'    => null,
-        'region'      => null,
-    ];
+    /**
+     * username
+     *
+     * @var string $username
+     */
+    private $username;
 
+    /**
+     * password
+     *
+     * @var string $password
+     */
+    private $password;
+
+    /**
+     * tenant_name
+     *
+     * @var string $tenant_name
+     */
+    private $tenant_name;
+
+    /**
+     * tenant_id
+     *
+     * @var string $tenant_id
+     */
+    private $tenant_id;
+
+    /**
+     * auth_url
+     *
+     * @var string $auth_url
+     */
+    private $auth_url;
+
+    /**
+     * region
+     *
+     * @var string $region
+     */
+    private $region;
+
+
+
+    /**
+     * usernameのセット
+     *
+     * @param string username
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    }
+
+    /**
+     * usernameの取得
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * passwordのセット
+     *
+     * @param string password
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * passwordの取得
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * tenant_nameのセット
+     *
+     * @param string tenant_name
+     */
+    public function setTenantName($tenant_name)
+    {
+        $this->tenant_name = $tenant_name;
+    }
+
+    /**
+     * tenant_nameの取得
+     *
+     * @return string
+     */
+    public function getTenantName()
+    {
+        return $this->tenant_name;
+    }
+
+    /**
+     * tenant_idのセット
+     *
+     * @param string tenant_id
+     */
+    public function setTenantId($tenant_id)
+    {
+        $this->tenant_id = $tenant_id;
+    }
+
+    /**
+     * tenant_idの取得
+     *
+     * @return string
+     */
+    public function getTenantId()
+    {
+        return $this->tenant_id;
+    }
+
+
+    /**
+     * auth_urlのセット
+     *
+     * @param string tenant_id
+     */
     public function setAuthUrl($url)
     {
         // Endpoint URLのパス部分(バージョンなど)を削除
@@ -35,74 +156,38 @@ class Secret extends Object
             throw new IncorrectUrlException("URL format is incorrect[$url].");
         }
 
-        $this->properties['auth_url'] = $endpoint_url;
+        $this->auth_url = $endpoint_url;
     }
 
-    // protected $username;
-    // protected $password;
-    // protected $tenant_name;
-    // protected $tenant_id;
-    // protected $auth_url;
-    // protected $region;
-    // protected $token;
+    /**
+     * auth_urlの取得
+     *
+     * @return string
+     */
+    public function getAuthUrl()
+    {
+        return $this->auth_url;
+    }
 
-    // public function setUsername($name)
-    // {
-    //     $this->username = $name;
-    // }
+    /**
+     * regionのセット
+     *
+     * @param string region
+     */
+    public function setRegion($region)
+    {
+        $this->region = $region;
+    }
 
-    // public function getUsername()
-    // {
-    //     return $this->username;
-    // }
+    /**
+     * regionの取得
+     *
+     * @return string
+     */
+    public function getRegion()
+    {
+        return $this->region;
+    }
 
-    // public function setPassword($pass)
-    // {
-    //     $this->password = $pass;
-    // }
 
-    // public function getPassword()
-    // {
-    //     return $this->password;
-    // }
-
-    // public function setTenantName($name)
-    // {
-    //     $this->tenant_name = $name;
-    // }
-
-    // public function getTenantName()
-    // {
-    //     return $this->tenant_name;
-    // }
-
-    // public function setTenantId($id)
-    // {
-    //     $this->tenant_id = $id;
-    // }
-
-    // public function getTenantId()
-    // {
-    //     return $this->tenant_id;
-    // }
-
-    // public function setRegion($pass)
-    // {
-    //     $this->region = $pass;
-    // }
-
-    // public function getRegion()
-    // {
-    //     return $this->region;
-    // }
-
-    // public function setToken($pass)
-    // {
-    //     $this->token = $pass;
-    // }
-
-    // public function getToken()
-    // {
-    //     return $this->token;
-    // }
 }
