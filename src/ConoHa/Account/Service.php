@@ -8,6 +8,7 @@ use ConoHa\Account\Resource\OrderItem;
 use ConoHa\Account\Resource\ProductItem;
 use ConoHa\Account\Resource\PaymentHistory;
 use ConoHa\Account\Resource\PaymentSummary;
+use ConoHa\Account\Resource\BillingInvoice;
 
 /**
  * ConoHa Account(Billing) Service.
@@ -118,5 +119,24 @@ class Service extends BaseService
         $item->populate($res->getJson()->payment_summary);
 
         return $item;
+    }
+
+    /**
+     * 課金アイテムへの請求データ一覧を取得する。
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-billing-invoices-list.html
+     *
+     * @return \ConoHa\Common\ResourceCollection
+     */
+    public function billingInvoice()
+    {
+        $res = $this->getClient()->get($this->getUri('billing-invoices'));
+
+        $item = new BillingInvoice();
+        $col = new ResourceCollection();
+        $col->fill($item, $res->getJson()->billing_invoices);
+
+        return $col;
     }
 }
