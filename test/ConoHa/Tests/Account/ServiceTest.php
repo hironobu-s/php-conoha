@@ -115,4 +115,42 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('int', $item->getBillPlasTax());
         $this->assertInstanceOf('\DateTime', $item->getDueDate());
     }
+
+    public function testNotifications()
+    {
+        $col = self::$service->notifications();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        if(count($col) > 0) {
+            $this->assertInstanceOf('ConoHa\Account\Resource\Notification', $col[0]);
+            $this->assertInternalType('int', $col[0]->getNotificationCode());
+            $col[0]->getType();
+            $this->assertInternalType('string', $col[0]->getTitle());
+            $this->assertInternalType('string', $col[0]->getContents());
+            $this->assertInternalType('string', $col[0]->getReadStatus());
+            $this->assertInstanceOf('\DateTime', $col[0]->getStartDate());
+        }
+
+        return $col;
+    }
+
+    /**
+     * @depends testNotifications
+     */
+    public function testNotification($col)
+    {
+        if(count($col) > 0) {
+            return;
+        }
+        $invoice_id = $col[0]->getInvoiceId();
+
+        $item = self::$servie->notification($invoice_id);
+        $this->assertInstanceOf('ConoHa\Account\Resource\Notification', $item);
+        $this->assertInternalType('int', $item->getNotificationCode());
+        $item->getType();
+        $this->assertInternalType('string', $item->getTitle());
+        $this->assertInternalType('string', $item->getContents());
+        $this->assertInternalType('string', $item->getReadStatus());
+        $this->assertInstanceOf('\DateTime', $item->getStartDate());
+    }
+
 }

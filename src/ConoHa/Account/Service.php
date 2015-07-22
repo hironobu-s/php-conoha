@@ -9,6 +9,7 @@ use ConoHa\Account\Resource\ProductItem;
 use ConoHa\Account\Resource\PaymentHistory;
 use ConoHa\Account\Resource\PaymentSummary;
 use ConoHa\Account\Resource\BillingInvoice;
+use ConoHa\Account\Resource\Notification;
 
 /**
  * ConoHa Account(Billing) Service.
@@ -155,6 +156,45 @@ class Service extends BaseService
 
         $item = new BillingInvoice();
         $item->populate($res->getJson()->billing_invoice);
+
+        return $item;
+    }
+
+
+    /**
+     * お知らせ一覧を取得する
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-informations-list.html
+     *
+     * @return \ConoHa\Common\ResourceCollection
+     */
+    public function notifications()
+    {
+        $res = $this->getClient()->get($this->getUri('notifications'));
+
+        $item = new Notification();
+        $col = new ResourceCollection();
+        $col->fill($item, $res->getJson()->notifications);
+
+        return $col;
+    }
+
+    /**
+     * notification_code を指定してお知らせの詳細情報を取得する
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-informations-detail-specified.html
+     *
+     * @param int $notification_code
+     * @return \ConoHa\Account\Resource\Notification
+     */
+    public function notification($notification_code)
+    {
+        $res = $this->getClient()->get($this->getUri(['notifications', $notification_code]));
+
+        $item = new Notification();
+        $item->populate($res->getJson()->notification);
 
         return $item;
     }
