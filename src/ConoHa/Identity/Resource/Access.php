@@ -35,7 +35,7 @@ class Access extends Object
     public function populate(\StdClass $json)
     {
         $this->token = new Token();
-        $this->token->populate($json);
+        $this->token->populate($json->access->token);
 
         $r = new ServiceCatalog();
         $this->service_catalog = new ResourceCollection();
