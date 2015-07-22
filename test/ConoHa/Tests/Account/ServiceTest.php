@@ -92,5 +92,27 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertInternalType('int', $col[0]->getBillPlasTax());
             $this->assertInstanceOf('\DateTime', $col[0]->getDueDate());
         }
+
+        return $col;
+    }
+
+    /**
+     * @depends testBillingInvoices
+     */
+    public function testBillingInvoice($col)
+    {
+        if(count($col) > 0) {
+            return;
+        }
+        $invoice_id = $col[0]->getInvoiceId();
+
+        $item = self::$servie->billingInvoice($invoice_id);
+        $this->assertInstanceOf('ConoHa\Account\Resource\BillingInvoice', $item);
+        $this->assertInternalType('int', $item->getInvoiceId());
+        $this->assertInternalType('string', $item->getPaymentMethodType());
+        $this->assertInstanceOf('\DateTime', $item->getInvoiceCreatedDate());
+        $this->assertInstanceOf('\DateTime', $item->getInvoiceDate());
+        $this->assertInternalType('int', $item->getBillPlasTax());
+        $this->assertInstanceOf('\DateTime', $item->getDueDate());
     }
 }

@@ -139,4 +139,23 @@ class Service extends BaseService
 
         return $col;
     }
+
+    /**
+     * 課金アイテムへの請求データ詳細を取得します。
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-billing-invoices-detail-specified.html
+     *
+     * @param int $invoice_id
+     * @return \ConoHa\Account\Resource\BillingInvoice
+     */
+    public function billingInvoice($invoice_id)
+    {
+        $res = $this->getClient()->get($this->getUri(['billing-invoices', $invoice_id]));
+
+        $item = new BillingInvoice();
+        $item->populate($res->getJson()->billing_invoice);
+
+        return $item;
+    }
 }
