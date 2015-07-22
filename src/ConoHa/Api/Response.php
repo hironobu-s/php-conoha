@@ -7,16 +7,49 @@ use ConoHa\Exception\HttpErrorException;
 
 class Response extends Object
 {
+    /**
+     * cURL
+     *
+     * @var resource
+     */
     private $curl;
-    private $info;
+
+    /**
+     * HTTPリクエストヘッダー
+     *
+     * @var array
+     */
+    private $request_headers;
+
+    /**
+     * HTTPレスポンスヘッダー
+     *
+     * @var array
+     */
+    private $response_headers;
+
+    /**
+     * HTTPステータスコード
+     *
+     * @var int
+     */
+    private $http_code;
+
+
+    /**
+     * HTTPレスポンスBody
+     *
+     * @var string
+     */
     private $body;
+
+    /**
+     * HTTPレスポンスBody(JSONの場合)
+     *
+     * @var stdClass $json
+     */
     private $json;
 
-    protected $properties = [
-        'headers' => [],
-        'body' => null,
-        'json' => null,
-    ];
 
     public function __construct($curl, $response)
     {
@@ -28,17 +61,12 @@ class Response extends Object
             throw new HttpErrorException(sprintf('cURL error with message. [%s]', $msg));
         }
 
-        // initialize property
-        $info = curl_getinfo($this->curl);
-        foreach($info as $name => $value) {
-            $this->properties[$name] = $value;
-        }
-
         // parse response
         $this->parseResponse($response);
 
         // http error
-        if($this->getHttpCode() >= 400) {
+        $http_code = curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
+        if($http_code >= 400) {
             $json = $this->getJson();
             if($json) {
                 $msg = $json->error->message;
@@ -46,7 +74,7 @@ class Response extends Object
                 $msg = $this->getBody();
             }
 
-            $ex = new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $this->getHttpCode(), $msg));
+            $ex = new HttpErrorException(sprintf('Server returned %d status code with message. [%s]', $http_code, $msg));
             $ex->setLastResponse($this);
             throw $ex;
         }
@@ -54,30 +82,99 @@ class Response extends Object
 
     private function parseResponse($response)
     {
-        $header_size = curl_getinfo($this->curl, CURLINFO_HEADER_SIZE);
-        $header_string = substr($response, 0, $header_size);
+        $info = curl_getinfo($this->curl);
 
-        $this->properties['headers'] = [];
-        foreach(explode("\r\n", $header_string) as $line) {
-            $cols = explode(": ", $line);
-            if(count($cols) != 2) {
-                continue;
+        $header2array = function($str_header) {
+            $headers = [];
+            foreach(explode("\r\n", $str_header) as $line) {
+                $cols = explode(": ", $line);
+                if(count($cols) != 2) {
+                    continue;
+                }
+
+                list($name, $value) = $cols;
+                $name = strtolower($name);
+                $headers[$name] = $value;
             }
+            return $headers;
+        };
 
-            list($name, $value) = $cols;
-            $name = strtolower($name);
-            $this->properties['headers'][$name] = $value;
+        // HTTPステータスコード
+        $this->http_code = $info['http_code'];
+
+        // リクエストヘッダ
+        if(isset($info['request_header'])) {
+            $this->request_headers = $header2array($info['request_header']);
+        } else {
+            $this->request_headers = [];
         }
 
-        $this->properties['body'] = substr($response, $header_size);
+        // レスポンスヘッダ
+        $str_header = substr($response, 0, $info['header_size']);
+        $this->response_headers = $header2array($str_header);
 
+        // Body
+        $this->body = substr($response, $info['header_size']);
+
+        // Body(JSON)
         if(
-            isset($this->getHeaders()['content-type']) &&
-            $this->getHeaders()['content-type'] == 'application/json'
+            isset($this->response_headers['content-type']) &&
+            $this->response_headers['content-type'] == 'application/json'
         ) {
-            $this->properties['json'] = json_decode($this->properties['body'], false);
+            $this->json = json_decode($this->body, false);
         } else {
-            $this->properties['json'] = "";
+            $this->json = "";
         }
     }
+
+    /**
+     * HTTPステータスコードの取得
+     *
+     * @return array
+     */
+    public function getHttpCode()
+    {
+        return $this->http_code;
+    }
+
+    /**
+     * リクエストヘッダーの取得
+     *
+     * @return array
+     */
+    public function getRequestHeaders()
+    {
+        return $this->request_headers;
+    }
+
+    /**
+     * レスポンスヘッダーの取得
+     *
+     * @return array
+     */
+    public function getResponseHeaders()
+    {
+        return $this->response_headers;
+    }
+
+    /**
+     * bodyの取得
+     *
+     * @return string
+     */
+    public function getBody()
+    {
+        return $this->body;
+    }
+
+    /**
+     * jsonの取得
+     *
+     * @return string
+     */
+    public function getJson()
+    {
+        return $this->json;
+    }
+
 }

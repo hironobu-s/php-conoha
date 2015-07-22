@@ -18,7 +18,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         curl_setopt($this->curl, CURLOPT_MAXREDIRS, 10);
         curl_setopt($this->curl, CURLOPT_AUTOREFERER, true);
         curl_setopt($this->curl, CURLOPT_HEADER, true);
-
     }
 
     public function testConstructor()
@@ -26,9 +25,35 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         curl_setopt($this->curl, CURLOPT_URL, TEST_IDENTITY_ENDPOINT);
 
         $res = curl_exec($this->curl);
-        $r = new Response($this->curl, $res);
+        $response = new Response($this->curl, $res);
 
-        $this->assertInstanceOf('ConoHa\Api\Response', $r);
+        $this->assertInstanceOf('ConoHa\Api\Response', $response);
+
+        return $response;
+    }
+
+    /**
+     * @depends testConstructor
+     */
+    public function testGetHttpCode($response)
+    {
+        $this->assertLessThan(399, $response->getHttpCode());
+    }
+
+    /**
+     * @depends testConstructor
+     */
+    public function testGetRequestHeaders($response)
+    {
+        $this->assertGreaterThanOrEqual(1, count($response->getRequestHeaders()));
+    }
+
+    /**
+     * @depends testConstructor
+     */
+    public function testGetResponseHeaders($response)
+    {
+        $this->assertGreaterThanOrEqual(1, count($response->getResponseHeaders()));
     }
 
     /**
@@ -49,7 +74,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         } catch(\Exception $ex) {
             $res = $ex->getLastResponse();
-            $this->assertEquals(404, $res->getHttpCode());
+
+            $curl = __get_curl_resource($res);
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $this->assertEquals(404, $http_code);
 
             // OK
             return ;

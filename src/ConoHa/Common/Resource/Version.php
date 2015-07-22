@@ -6,26 +6,140 @@ use ConoHa\Common\BaseResource;
 
 class Version extends BaseResource
 {
-    protected $properties = [
-        'id' => null,
-        'status' => null,
-        'updated' => null,
-        'media_types' => [],
-        'links' => [],
-    ];
+    /**
+     * id
+     *
+     * @var string $id
+     */
+    private $id;
 
-    public function populate(\StdClass $json)
+    /**
+     * status
+     *
+     * @var string $status
+     */
+    private $status;
+
+    /**
+     * updated
+     *
+     * @var string $updated
+     */
+    private $updated;
+
+    /**
+     * media_types
+     *
+     * @var array $media_types
+     */
+    private $media_types;
+
+    /**
+     * links
+     *
+     * @var array $links
+     */
+    private $links;
+
+
+
+    /**
+     * idのセット
+     *
+     * @param string id
+     */
+    public function setId($id)
     {
-        // 上位がVersionsクラスの場合はこのプロパティは存在しないが、
-        // Versionを単独でAPIを叩いた場合は存在する。
-        if(isset($json->version)) {
-            $json = $json->version;
-        }
+        $this->id = $id;
+    }
 
-        $this->properties['id'] = $json->id;
-        $this->properties['status'] = $json->status;
-        $this->properties['updated'] = new \DateTime($json->updated);
-        $this->properties['media_types'] = $json->{'media-types'};
-        $this->properties['links'] = $json->links;
+    /**
+     * idの取得
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * statusのセット
+     *
+     * @param string status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * statusの取得
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * updatedのセット
+     *
+     * @param string updated
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = new \DateTime($updated);
+    }
+
+    /**
+     * updatedの取得
+     *
+     * @return string
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    /**
+     * media_typesのセット
+     *
+     * @param array media_types
+     */
+    public function setMediaTypes($media_types)
+    {
+        $this->media_types = $media_types;
+    }
+
+    /**
+     * media_typesの取得
+     *
+     * @return array
+     */
+    public function getMediaTypes()
+    {
+        return $this->media_types;
+    }
+
+    /**
+     * linksのセット
+     *
+     * @param array links
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
+    }
+
+    /**
+     * linksの取得
+     *
+     * @return array
+     */
+    public function getLinks()
+    {
+        return $this->links;
     }
 }
