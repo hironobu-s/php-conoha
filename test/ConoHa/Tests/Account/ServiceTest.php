@@ -79,9 +79,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('integer', $item->getTotalDepositAmount());
     }
 
-    public function testBillingInvoice()
+    public function testBillingInvoices()
     {
-        $col = self::$service->billingInvoice();
+        $col = self::$service->billingInvoices();
         $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
         if(count($col) > 0) {
             $this->assertInstanceOf('ConoHa\Account\Resource\BillingInvoice', $col[0]);

@@ -129,7 +129,7 @@ class Service extends BaseService
      *
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function billingInvoice()
+    public function billingInvoices()
     {
         $res = $this->getClient()->get($this->getUri('billing-invoices'));
 
