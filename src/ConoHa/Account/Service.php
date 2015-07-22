@@ -62,15 +62,24 @@ class Service extends BaseService
      */
     public function productItems()
     {
-        // $res = $this->getClient()->get($this->getUri('product-items'));
-        // //$res = $this->getClient()->get($this->getUri('payment-history'));
+        $res = $this->getClient()->get($this->getUri('product-items'));
 
-        // $item = new ProductItem();
-        // $col = new ResourceCollection();
-        // print_r($res->getBody());exit;
+        $item = new ProductItem();
+        $col = new ResourceCollection();
 
-        // $col->fill($item, $res->getJson()->product_items);
-        // return $col;
+        foreach($res->getJson()->product_items as $item) {
+            foreach($item->regions as $region) {
+                foreach($region->products as $product) {
+                    $product_item = new ProductItem();
+                    $product_item->setServiceName($item->service_name);
+                    $product_item->setRegionName($region->region_name);
+                    $product_item->setProductName($product->product_name);
+                    $product_item->setUnitPrice($product->unit_price);
+                    $col[] = $product_item;
+                }
+            }
+        }
+        return $col;
     }
 
     /**
