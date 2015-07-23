@@ -162,11 +162,21 @@ class Service extends BaseService
      * @api
      * @link https://www.conoha.jp/docs/account-billing-invoices-list.html
      *
+     * @param int $offset (Optional)offset of results. Default value is 0.
+     * @param int $limit  (Optional)offset of results. Default value is 1000.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function billingInvoices()
+    public function billingInvoices($offset = null, $limit = null)
     {
-        $res = $this->getClient()->get($this->getUri('billing-invoices'));
+        $query = [];
+        if(is_numeric($offset)) {
+            $query['offset'] = $offset;
+        }
+        if(is_numeric($limit)) {
+            $query['limit'] = $limit;
+        }
+
+        $res = $this->getClient()->get($this->getUri('billing-invoices', $query));
 
         $item = new BillingInvoice();
         $col = new ResourceCollection();

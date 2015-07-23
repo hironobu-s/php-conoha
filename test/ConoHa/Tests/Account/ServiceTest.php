@@ -114,6 +114,18 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         return $col;
     }
 
+    public function testBillingInvoicesWithOffset()
+    {
+        $col = self::$service->billingInvoices(1);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    public function testBillingInvoicesWithLimit()
+    {
+        $col = self::$service->billingInvoices(0, 1000);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
     /**
      * @depends testBillingInvoices
      */
