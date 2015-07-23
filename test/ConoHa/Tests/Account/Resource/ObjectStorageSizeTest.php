@@ -31,4 +31,19 @@ class ObjectStorageSizeTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1437624000, $item->getUnixtime());
         $this->assertEquals(100, $item->getValue());
     }
+
+    /**
+     * @expectedException \ConoHa\Exception\PopulateException
+     */
+    public function testPopulateWithInvalidJson()
+    {
+        $data = [
+            1437624000,
+            100,
+            100,  // excess
+        ];
+
+        $item = new ObjectStorageSize();
+        $item->populate($data);
+    }
 }

@@ -39,4 +39,22 @@ class ObjectStorageRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(200, $item->getPut());
         $this->assertEquals(300, $item->getDelete());
     }
+
+    /**
+     * @expectedException \ConoHa\Exception\PopulateException
+     */
+    public function testPopulateWithInvalidJson()
+    {
+        $data = [
+            1437624000,
+            100,
+            200,
+            300,
+            400,  // excess
+        ];
+
+        $item = new ObjectStorageRequest();
+        $item->populate($data);
+    }
+
 }
