@@ -53,7 +53,7 @@ abstract class BaseService extends Object
         return $this->endpoint;
     }
 
-    public function getUri($path = null)
+    public function getUri($path = null, array $query = [])
     {
         $endpoint = $this->getEndpoint();
         if(is_array($path)) {
@@ -61,6 +61,11 @@ abstract class BaseService extends Object
         } else if($path) {
             $endpoint .= '/' . $path;
         }
+
+        if(isset($query)) {
+            $endpoint .= '?' . http_build_query($query);
+        }
+
         return $endpoint;
     }
 
