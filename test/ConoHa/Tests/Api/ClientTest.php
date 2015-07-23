@@ -41,7 +41,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $curl = __get_curl_resource($res);
         $info = curl_getinfo($curl);
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $info['url']);
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $info['url']);
         $this->assertStringStartsWith("GET", $info['request_header']);
     }
 
@@ -67,7 +67,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $curl = __get_curl_resource($res);
         $info = curl_getinfo($curl);
         $header = $info['request_header'];
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT . '/', $info['url']);
+        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $info['url']);
         $this->assertStringStartsWith("POST", $header);
         $this->assertContains("Content-Length: 13", $header);
         $this->assertContains("Content-Type: application/x-www-form-urlencoded", $header);

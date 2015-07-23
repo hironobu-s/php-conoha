@@ -89,7 +89,10 @@ abstract class BaseService extends Object
 
     public function getVersion($version)
     {
-        $res = $this->getClient()->get($this->getUri($version));
+        $uri = $this->getUri($version);
+        $info = parse_url($uri);
+        $uri = $info['scheme'] . "://" . $info['host'] . '/';
+        $res = $this->getClient()->get($uri);
 
         $v = new Version();
         $v->populate($res->getJson());

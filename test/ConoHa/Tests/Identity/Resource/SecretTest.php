@@ -21,21 +21,4 @@ class SecretTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(TEST_API_TENANT_ID, $s->getTenantId());
         $this->assertEquals(TEST_IDENTITY_ENDPOINT, $s->getAuthUrl());
     }
-
-    public function testNoSchemeUrl() {
-        $info = parse_url(TEST_IDENTITY_ENDPOINT);
-        $s = new Secret();
-        $s->setAuthUrl("//" . $info['host']);
-
-        $url = $s->getAuthUrl();
-        $this->assertEquals(TEST_IDENTITY_ENDPOINT, $url);
-    }
-
-    /**
-     * @expectedException ConoHa\Exception\IncorrectUrlException
-     */
-    public function testInvalidUrl() {
-        $s = new Secret();
-        $s->setAuthUrl("invalid url");
-    }
 }

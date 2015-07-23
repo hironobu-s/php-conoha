@@ -139,24 +139,7 @@ class Secret extends Object
      */
     public function setAuthUrl($url)
     {
-        // Endpoint URLのパス部分(バージョンなど)を削除
-        // バージョンは getVersion() で内部的に取得するので不要
-        $info = parse_url($url);
-
-        if(isset($info['scheme'])) {
-            $scheme = $info['scheme'];
-        } else {
-            // 省略された場合はhttpsを決め打ち
-            $scheme = 'https';
-        }
-
-        if(isset($info['host'])) {
-            $endpoint_url = sprintf('%s://%s', $scheme, $info['host']);
-        } else {
-            throw new IncorrectUrlException("URL format is incorrect[$url].");
-        }
-
-        $this->auth_url = $endpoint_url;
+        $this->auth_url = $url;
     }
 
     /**

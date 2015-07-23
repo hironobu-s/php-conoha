@@ -14,11 +14,6 @@ class Service extends BaseService
 
     public function tokens(Secret $secret)
     {
-        $version = $this->getStableVersion();
-        if(!$version) {
-            throw new ServiceNotFoundException('Stable version identity service is not found.');
-        }
-
         $auth = [
             'auth' => [
                 'passwordCredentials' => [
@@ -30,7 +25,7 @@ class Service extends BaseService
         ];
         $json = json_encode($auth);
 
-        $res = $this->getClient()->post($this->getUri([$version->getId(), 'tokens']), [
+        $res = $this->getClient()->post($this->getUri('tokens'), [
             'body' => $json,
         ]);
 
