@@ -65,4 +65,13 @@ class BaseResourceTest extends \PHPUnit_Framework_TestCase
         $result = $obj->camel2Snake($before);
         $this->assertEquals($result, $after);
     }
+
+    /**
+     * @expectedException \BadMethodCallException
+     */
+    public function testStore()
+    {
+        $item = new TestResource;
+        $item->store();
+    }
 }
