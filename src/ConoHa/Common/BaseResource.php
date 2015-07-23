@@ -7,12 +7,6 @@ use ConoHa\Common\BaseService;
 
 abstract class BaseResource extends Object
 {
-    protected $service;
-    public function __construct(BaseService $service = null)
-    {
-        $this->service = $service;
-    }
-
     /**
      * オブジェクトのフォールドを埋める
      *
@@ -42,16 +36,5 @@ abstract class BaseResource extends Object
         $name = preg_replace('/[A-Z]/', '_\0', $name);
         $name = strtolower($name);
         return ltrim($name, '_');
-    }
-
-    /**
-     * リソースを永続化する
-     *
-     * リソースによって永続化が可能な場合(PUTメソッドをサポートしている)は
-     * このメソッドをオーバーライドして実装する
-     */
-    public function store()
-    {
-        throw new \BadMethodCallException('The requested resource does not support store() method.');
     }
 }

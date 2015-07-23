@@ -296,7 +296,7 @@ class Service extends BaseService
         $res = $this->getClient()->get($this->getUri('object-storage/rrd/request', $query));
 
         $col = new ResourceCollection;
-        $item = new ObjectStorageRequest($this);
+        $item = new ObjectStorageRequest();
         $col->fill($item, $res->getJson()->request->data);
 
         return $col;
@@ -340,7 +340,7 @@ class Service extends BaseService
         $res = $this->getClient()->get($this->getUri('object-storage/rrd/size', $query));
 
         $col = new ResourceCollection;
-        $item = new ObjectStorageSize($this);
+        $item = new ObjectStorageSize();
         $col->fill($item, $res->getJson()->size->data);
 
         return $col;

@@ -2,9 +2,9 @@
 
 namespace ConoHa\Account\Resource;
 
-use ConoHa\Common\BaseResource;
+use ConoHa\Common\StorableResource;
 
-class Notification extends BaseResource
+class Notification extends StorableResource
 {
     /**
      * notification_code

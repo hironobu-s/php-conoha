@@ -3,11 +3,12 @@
 namespace ConoHa\Identity\Resource;
 
 use ConoHa\Common\Object;
+use ConoHa\Common\BaseResource;
 use ConoHa\Common\ResourceCollection;
 use ConoHa\Identity\Resource\ServiceCatalog;
 use ConoHa\Identity\Resource\Token;
 
-class Access extends Object
+class Access extends BaseResource
 {
     private $catalog;
     private $token;
