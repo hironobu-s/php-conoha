@@ -62,7 +62,7 @@ abstract class BaseService extends Object
             $endpoint .= '/' . $path;
         }
 
-        if(isset($query)) {
+        if(count($query) > 0) {
             $endpoint .= '?' . http_build_query($query);
         }
 
