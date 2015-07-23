@@ -68,8 +68,9 @@ class Service extends BaseService
      *                             DB, DBBackup, DBAddDisk, ObjectStorage or DNS.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function productItems($service_name = '')
+    public function productItems($service_name = null)
     {
+        $query = [];
         switch($service_name) {
             case 'VPS':
             case 'VPSAddDisk':
@@ -91,8 +92,7 @@ class Service extends BaseService
                 ];
                 break;
 
-            case '':
-                $query = [];
+            case null:
                 break;
             default:
                 throw \InvalidArgumentException('Invalid service name.');
@@ -166,7 +166,7 @@ class Service extends BaseService
      * @param int $limit  (Optional)limit the results. Default value is 1000.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function billingInvoices($offset = null, $limit = null)
+    public function billingInvoices($offset = 0, $limit = 1000)
     {
         $query = [];
         if(is_numeric($offset)) {
@@ -214,7 +214,7 @@ class Service extends BaseService
      * @param int $limit  (Optional)limit the results. Default value is 1000.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function notifications($offset = null, $limit = null)
+    public function notifications($offset = 0, $limit = 1000)
     {
         $query = [];
         if(is_numeric($offset)) {
