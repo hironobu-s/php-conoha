@@ -162,8 +162,8 @@ class Service extends BaseService
      * @api
      * @link https://www.conoha.jp/docs/account-billing-invoices-list.html
      *
-     * @param int $offset (Optional)offset of results. Default value is 0.
-     * @param int $limit  (Optional)offset of results. Default value is 1000.
+     * @param int $offset (Optional)result offset. Default value is 0.
+     * @param int $limit  (Optional)limit the results. Default value is 1000.
      * @return \ConoHa\Common\ResourceCollection
      */
     public function billingInvoices($offset = null, $limit = null)
