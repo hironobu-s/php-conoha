@@ -165,6 +165,18 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         return $col;
     }
 
+    public function testNotificationsWithOffset()
+    {
+        $col = self::$service->notifications(0);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    public function testNotificationsWithLimit()
+    {
+        $col = self::$service->notifications(0, 5);
+        $this->assertCount(5, $col);
+    }
+
     /**
      * @depends testNotifications
      */

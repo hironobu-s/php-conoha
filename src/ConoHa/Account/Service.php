@@ -210,11 +210,21 @@ class Service extends BaseService
      * @api
      * @link https://www.conoha.jp/docs/account-informations-list.html
      *
+     * @param int $offset (Optional)result offset. Default value is 0.
+     * @param int $limit  (Optional)limit the results. Default value is 1000.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function notifications()
+    public function notifications($offset = null, $limit = null)
     {
-        $res = $this->getClient()->get($this->getUri('notifications'));
+        $query = [];
+        if(is_numeric($offset)) {
+            $query['offset'] = $offset;
+        }
+        if(is_numeric($limit)) {
+            $query['limit'] = $limit;
+        }
+
+        $res = $this->getClient()->get($this->getUri('notifications', $query));
 
         $item = new Notification($this);
         $col = new ResourceCollection();
