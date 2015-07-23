@@ -137,6 +137,16 @@ class Notification extends BaseResource
      */
     public function setReadStatus($read_status)
     {
+        switch($read_status) {
+            case "Read":
+            case "Unread":
+            case "ReadTitleOnly":
+                break;
+
+            default:
+                throw new \InvalidArgumentException('$read_status must be "Read", "Unread" or "ReadTitleOnly".');
+        }
+
         $this->read_status = $read_status;
     }
 
@@ -173,4 +183,23 @@ class Notification extends BaseResource
         return $this->start_date;
     }
 
+    /**
+     * 既読/未読ステータスを保存する
+     *
+     * @return void
+     * @throws HttpErrorException
+     */
+    public function store()
+    {
+        $url = $this->service->getUri(['notifications', $this->getNotificationCode()]);
+        $params = [
+            'notification' => [
+                'read_status' => $this->getReadStatus(),
+            ]
+        ];
+        $this->service->getClient()->put($url, [
+            'json_body' => $params,
+            'debug' => true
+        ]);
+    }
 }

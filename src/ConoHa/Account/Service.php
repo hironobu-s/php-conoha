@@ -160,7 +160,6 @@ class Service extends BaseService
         return $item;
     }
 
-
     /**
      * お知らせ一覧を取得する
      *
@@ -173,7 +172,7 @@ class Service extends BaseService
     {
         $res = $this->getClient()->get($this->getUri('notifications'));
 
-        $item = new Notification();
+        $item = new Notification($this);
         $col = new ResourceCollection();
         $col->fill($item, $res->getJson()->notifications);
 
@@ -193,7 +192,7 @@ class Service extends BaseService
     {
         $res = $this->getClient()->get($this->getUri(['notifications', $notification_code]));
 
-        $item = new Notification();
+        $item = new Notification($this);
         $item->populate($res->getJson()->notification);
 
         return $item;
