@@ -71,6 +71,10 @@ class NotificationTest extends \PHPUnit_Framework_TestCase
 
     public function testStore()
     {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
+
         // SKIPPED
         $this->markTestSkipped('API側の不具合のため');
 

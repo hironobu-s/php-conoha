@@ -22,6 +22,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructor()
     {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
+
         curl_setopt($this->curl, CURLOPT_URL, TEST_IDENTITY_ENDPOINT);
 
         $res = curl_exec($this->curl);
@@ -66,6 +70,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testConstructorWithHtmlError()
     {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
+
         curl_setopt($this->curl, CURLOPT_URL, TEST_IDENTITY_ENDPOINT . "/foobar");
 
         try {
@@ -91,6 +99,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstructorWithJsonError()
     {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
+
         $secret = '
 {
   "auth": {

@@ -33,7 +33,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequest()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $url = TEST_IDENTITY_ENDPOINT;
@@ -48,7 +48,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestWidhContent()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         try {
@@ -76,7 +76,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestWithCustomHeaders()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $url = TEST_IDENTITY_ENDPOINT;
@@ -99,7 +99,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestWithDebug()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $url = TEST_IDENTITY_ENDPOINT;

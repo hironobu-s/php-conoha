@@ -10,12 +10,21 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     private static $service;
     public static function setUpBeforeClass()
     {
-        $access = __get_test_access();
+        if(API_TEST) {
+            $access = __get_test_access();
 
-        $c = new ConoHa();
-        $c->setAccess($access);
+            $c = new ConoHa();
+            $c->setAccess($access);
 
-        self::$service = $c->getAccountService();
+            self::$service = $c->getAccountService();
+        }
+    }
+
+    public function setup()
+    {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
     }
 
     public function testOrderItems()
@@ -24,27 +33,18 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
         if(count($col) > 0) {
             $this->assertInstanceOf('ConoHa\Account\Resource\OrderItem', $col[0]);
+        } else {
+            $this->markTestImcomplete('The number of order-items is 0.');
         }
-
         return $col;
     }
 
     /**
-     * API側に不具合があるため、実装はしたがまだテストはしない
-     *
      * @depends testOrderItems
      */
     public function testOrderItem($col)
     {
-        if(count($col) == 0) {
-            return;
-        }
-        //$item = $col[0];
-        //$detail = self::$service->orderItem($item->getUuId());
-        // $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
-        // if(count($col) > 0) {
-        //     $this->assertInstanceOf('ConoHa\Account\Resource\OrderItem', $col[0]);
-        // }
+        $this->markTestSkipped('API側に不具合があるため、実装はしたがまだテストはしない');
     }
 
     public function testProductItems()
@@ -57,6 +57,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($col[0]->getRegionName());
             $this->assertNotNull($col[0]->getProductName());
             $this->assertNotNull($col[0]->getUnitPrice());
+        } else {
+            $this->markTestImcomplete('The number of product-items is 0.');
         }
     }
 
@@ -69,6 +71,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($col[0]->getMoneyType());
             $this->assertInternalType('integer', $col[0]->getDepositAmount());
             $this->assertInstanceOf('\DateTime', $col[0]->getReceivedDate());
+        } else {
+            $this->markTestIncomplete('The number of payment-history is 0.');
         }
     }
 
@@ -91,6 +95,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertInstanceOf('\DateTime', $col[0]->getInvoiceDate());
             $this->assertInternalType('int', $col[0]->getBillPlasTax());
             $this->assertInstanceOf('\DateTime', $col[0]->getDueDate());
+        } else {
+            $this->markTestIncomplete('The number of billing-invoice is 0.');
         }
 
         return $col;
@@ -102,6 +108,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     public function testBillingInvoice($col)
     {
         if(count($col) > 0) {
+            $this->markTestIncomplete('The number of billing-invoice is 0.');
             return;
         }
         $invoice_id = $col[0]->getInvoiceId();
@@ -128,8 +135,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertInternalType('string', $col[0]->getContents());
             $this->assertInternalType('string', $col[0]->getReadStatus());
             $this->assertInstanceOf('\DateTime', $col[0]->getStartDate());
+        } else {
+            $this->markTestIncomplete('The number of notifications is 0.');
         }
-
         return $col;
     }
 

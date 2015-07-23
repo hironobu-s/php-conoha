@@ -41,7 +41,7 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetVersions()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $v = $this->service->getVersions();
@@ -51,7 +51,7 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetVersion()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $v = $this->service->getVersion("v2.0");
@@ -61,7 +61,7 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
     public function testGetStableVersion()
     {
         if(!API_TEST) {
-            return ;
+            $this->markTestSkipped('This test requires API access to execute.');
         }
 
         $v = $this->service->getStableVersion();

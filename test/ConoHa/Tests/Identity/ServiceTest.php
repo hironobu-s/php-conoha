@@ -6,6 +6,13 @@ use ConoHa\Identity\Service;
 
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
+    public function setup()
+    {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
+    }
+
     public function testTokens()
     {
         $secret = __get_test_secret();

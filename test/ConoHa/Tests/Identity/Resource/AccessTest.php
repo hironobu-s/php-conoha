@@ -14,9 +14,18 @@ class AccessTest extends \PHPUnit_Framework_TestCase
     protected static $access;
     public static function setUpBeforeClass()
     {
-        $secret = __get_test_secret();
-        $conoha = new ConoHa();
-        self::$access = $conoha->auth($secret);
+        if(API_TEST) {
+            $secret = __get_test_secret();
+            $conoha = new ConoHa();
+            self::$access = $conoha->auth($secret);
+        }
+    }
+
+    public function setup()
+    {
+        if(!API_TEST) {
+            $this->markTestSkipped('This test requires API access to execute.');
+        }
     }
 
     public function testGetToken()
