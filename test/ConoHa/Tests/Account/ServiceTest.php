@@ -62,6 +62,18 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testProductItemsWithFilter()
+    {
+        $service_name = 'VPS';
+        $col = self::$service->productItems($service_name);
+        $names = [];
+        foreach($col as $service) {
+            $names[$service->getServiceName()] = null;
+        }
+        $this->assertEquals([ 'VPS' => null ], $names);
+
+    }
+
     public function testPaymentHistory()
     {
         $col = self::$service->paymentHistory();

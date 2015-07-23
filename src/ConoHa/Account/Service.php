@@ -61,11 +61,44 @@ class Service extends BaseService
      * @api
      * @link https://www.conoha.jp/docs/account-products.html
      *
+     * @param string $service_name (Optional) The service name for filtering.
+     *                             It should be one of following.
+     *                             VPS, VPSAddDisk, VPSBackup, AddIP, LoadBalancer,
+     *                             ImageSave, Mail, MailBackup, StaticIP, MailAddDisk,
+     *                             DB, DBBackup, DBAddDisk, ObjectStorage or DNS.
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function productItems()
+    public function productItems($service_name = '')
     {
-        $res = $this->getClient()->get($this->getUri('product-items'));
+        switch($service_name) {
+            case 'VPS':
+            case 'VPSAddDisk':
+            case 'VPSBackup':
+            case 'AddIP':
+            case 'LoadBalancer':
+            case 'ImageSave':
+            case 'Mail':
+            case 'MailBackup':
+            case 'StaticIP':
+            case 'MailAddDisk':
+            case 'DB':
+            case 'DBBackup':
+            case 'DBAddDisk':
+            case 'ObjectStorage':
+            case 'DNS':
+                $query = [
+                    'service_name' => $service_name,
+                ];
+                break;
+
+            case '':
+                $query = [];
+                break;
+            default:
+                throw \InvalidArgumentException('Invalid service name.');
+        }
+
+        $res = $this->getClient()->get($this->getUri('product-items', $query));
 
         $item = new ProductItem();
         $col = new ResourceCollection();
@@ -79,6 +112,7 @@ class Service extends BaseService
                     $product_item->setProductName($product->product_name);
                     $product_item->setUnitPrice($product->unit_price);
                     $col[] = $product_item;
+                    $tmp[$item->service_name] = '';
                 }
             }
         }
