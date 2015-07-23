@@ -44,8 +44,16 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
             $this->markTestSkipped('This test requires API access to execute.');
         }
 
-        $v = $this->service->getVersions();
-        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $v);
+        $vs = $this->service->getVersions();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $vs);
+        $this->assertGreaterThan(0, count($vs));
+
+        $v = $vs[0];
+        $this->assertInternalType('string', $v->getId());
+        $this->assertInternalType('string', $v->getStatus());
+        $this->assertInstanceOf('\DateTime', $v->getUpdated());
+        $this->assertInternalType('array', $v->getLinks());
+        $this->assertGreaterThan(1, $v->getLinks());
     }
 
     public function testGetVersion()
@@ -56,6 +64,11 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
 
         $v = $this->service->getVersion("v2.0");
         $this->assertInstanceOf('ConoHa\Common\Resource\Version', $v);
+        $this->assertInternalType('string', $v->getId());
+        $this->assertInternalType('string', $v->getStatus());
+        $this->assertInstanceOf('\DateTime', $v->getUpdated());
+        $this->assertInternalType('array', $v->getLinks());
+        $this->assertGreaterThan(1, count($v->getLinks()));
     }
 
     public function testGetStableVersion()
@@ -66,5 +79,11 @@ class BaseServiceTest extends \PHPUnit_Framework_TestCase
 
         $v = $this->service->getStableVersion();
         $this->assertInstanceOf('ConoHa\Common\Resource\Version', $v);
+        $this->assertInstanceOf('ConoHa\Common\Resource\Version', $v);
+        $this->assertInternalType('string', $v->getId());
+        $this->assertInternalType('string', $v->getStatus());
+        $this->assertInstanceOf('\DateTime', $v->getUpdated());
+        $this->assertInternalType('array', $v->getLinks());
+        $this->assertGreaterThan(1, $v->getLinks());
     }
 }
