@@ -197,4 +197,15 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTime', $item->getStartDate());
     }
 
+    public function testObjectStorageRrdRequest()
+    {
+        $col = self::$service->objectStorageRrdRequest();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        if(count($col) > 0) {
+            $this->assertInstanceOf('ConoHa\Account\Resource\ObjectStorageRequest', $col[0]);
+        } else {
+            $this->markTestIncomplete('The number of object-storage-request is 0.');
+        }
+        return $col;
+    }
 }

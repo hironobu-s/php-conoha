@@ -10,6 +10,7 @@ use ConoHa\Account\Resource\PaymentHistory;
 use ConoHa\Account\Resource\PaymentSummary;
 use ConoHa\Account\Resource\BillingInvoice;
 use ConoHa\Account\Resource\Notification;
+use ConoHa\Account\Resource\ObjectStorageRequest;
 
 /**
  * ConoHa Account(Billing) Service.
@@ -251,4 +252,53 @@ class Service extends BaseService
 
         return $item;
     }
+
+    /**
+     * オブジェクトストレージのリクエスト数を取得します。
+     * 取得する項目は
+     * get
+     * put
+     * delete
+     * の三項目
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-informations-detail-specified.html
+     *
+     * @param \DateTime $start_date_raw (Optional)データ取得開始時間
+     * @param \DateTime $end_date_raw   (Optional)データ取得終了時間
+     * @param string    $mode           (Optional)データ統合方法(average,max,min)
+     * @return \ConoHa\Account\Resource\Notification
+     */
+    public function objectStorageRrdRequest($start_date_raw = null, $end_date_raw = null, $mode = 'average')
+    {
+        $query = [];
+        if($start_date_raw instanceof \DateTime) {
+            $query['start_date_raw'] = $start_date_raw->format('U');
+        }
+
+        if($end_date_raw instanceof \DateTime) {
+            $query['end_date_raw'] = $end_date_raw->format('U');
+        }
+
+        switch($mode) {
+            case 'average':
+            case 'max':
+            case 'min':
+                $query = [
+                    'mode' => $mode
+                ];
+                break;
+            default:
+                throw \InvalidArgumentException('Invalid mode.');
+        }
+
+        $res = $this->getClient()->get($this->getUri('object-storage/rrd/request', $query));
+
+        $col = new ResourceCollection;
+        $item = new ObjectStorageRequest($this);
+        $col->fill($item, $res->getJson()->request->data);
+
+        return $col;
+    }
+
 }

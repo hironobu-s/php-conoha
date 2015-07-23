@@ -13,6 +13,13 @@ abstract class BaseResource extends Object
         $this->service = $service;
     }
 
+    /**
+     * オブジェクトのフォールドを埋める
+     *
+     * @param $res \StdClass JSONオブジェクト
+     * @reutrn void
+     * @throws \ConoHa\Exception\PopulateException
+     */
     public function populate(\StdClass $res)
     {
         foreach($res as $name => $value) {
