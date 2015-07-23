@@ -289,7 +289,7 @@ class Service extends BaseService
                 ];
                 break;
             default:
-                throw \InvalidArgumentException('Invalid mode.');
+                throw new \InvalidArgumentException('Invalid mode.');
         }
 
         $res = $this->getClient()->get($this->getUri('object-storage/rrd/request', $query));

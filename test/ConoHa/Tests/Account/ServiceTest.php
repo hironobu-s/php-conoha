@@ -206,6 +206,30 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         } else {
             $this->markTestIncomplete('The number of object-storage-request is 0.');
         }
-        return $col;
+    }
+
+    public function testObjectStorageRrdRequestWithSpan()
+    {
+        $start = new \DateTime('2015-07-01 00:00:00');
+        $end   = new \DateTime('2015-01-01 00:00:00');
+
+        $col = self::$service->objectStorageRrdRequest($start, $end);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    public function testObjectStorageRrdRequestWithMode()
+    {
+        $mode = 'max';
+        $col = self::$service->objectStorageRrdRequest(null, null, $mode);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testObjectStorageRrdRequestWithInvalidMode()
+    {
+        $mode = 'hoge';
+        $col = self::$service->objectStorageRrdRequest(null, null, $mode);
     }
 }
