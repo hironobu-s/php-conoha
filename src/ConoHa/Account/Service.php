@@ -11,6 +11,7 @@ use ConoHa\Account\Resource\PaymentSummary;
 use ConoHa\Account\Resource\BillingInvoice;
 use ConoHa\Account\Resource\Notification;
 use ConoHa\Account\Resource\ObjectStorageRequest;
+use ConoHa\Account\Resource\ObjectStorageSize;
 
 /**
  * ConoHa Account(Billing) Service.
@@ -301,4 +302,47 @@ class Service extends BaseService
         return $col;
     }
 
+
+    /**
+     * オブジェクトストレージの使用容量を取得する。単位は byte。
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/account-get_objectstorage_size_rrd.html
+     *
+     * @param \DateTime $start_date_raw (Optional)データ取得開始時間
+     * @param \DateTime $end_date_raw   (Optional)データ取得終了時間
+     * @param string    $mode           (Optional)データ統合方法(average,max,min)
+     * @return \ConoHa\Account\Resource\Notification
+     */
+    public function objectStorageRrdSize($start_date_raw = null, $end_date_raw = null, $mode = 'average')
+    {
+        $query = [];
+        if($start_date_raw instanceof \DateTime) {
+            $query['start_date_raw'] = $start_date_raw->format('U');
+        }
+
+        if($end_date_raw instanceof \DateTime) {
+            $query['end_date_raw'] = $end_date_raw->format('U');
+        }
+
+        switch($mode) {
+            case 'average':
+            case 'max':
+            case 'min':
+                $query = [
+                    'mode' => $mode
+                ];
+                break;
+            default:
+                throw new \InvalidArgumentException('Invalid mode.');
+        }
+
+        $res = $this->getClient()->get($this->getUri('object-storage/rrd/size', $query));
+
+        $col = new ResourceCollection;
+        $item = new ObjectStorageSize($this);
+        $col->fill($item, $res->getJson()->size->data);
+
+        return $col;
+    }
 }

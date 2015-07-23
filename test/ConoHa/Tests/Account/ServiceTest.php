@@ -232,4 +232,41 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $mode = 'hoge';
         $col = self::$service->objectStorageRrdRequest(null, null, $mode);
     }
+
+
+    public function testObjectStorageRrdSize()
+    {
+        $col = self::$service->objectStorageRrdSize();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        if(count($col) > 0) {
+            $this->assertInstanceOf('ConoHa\Account\Resource\ObjectStorageSize', $col[0]);
+        } else {
+            $this->markTestIncomplete('The number of object-storage-size is 0.');
+        }
+    }
+
+    public function testObjectStorageRrdSizeWithSpan()
+    {
+        $start = new \DateTime('2015-07-01 00:00:00');
+        $end   = new \DateTime('2015-01-01 00:00:00');
+
+        $col = self::$service->objectStorageRrdSize($start, $end);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    public function testObjectStorageRrdSizeWithMode()
+    {
+        $mode = 'max';
+        $col = self::$service->objectStorageRrdSize(null, null, $mode);
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testObjectStorageRrdSizeWithInvalidMode()
+    {
+        $mode = 'hoge';
+        $col = self::$service->objectStorageRrdSize(null, null, $mode);
+    }
 }
