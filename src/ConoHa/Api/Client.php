@@ -62,7 +62,9 @@ class Client {
             case "PUT":
             case "DELETE":
                 curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-                if(isset($options['body'])) {
+                if(isset($options['json_body'])) {
+                    curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($options['json_body']));
+                } else if(isset($options['body'])) {
                     curl_setopt($curl, CURLOPT_POSTFIELDS, $options['body']);
                 }
                 break;
