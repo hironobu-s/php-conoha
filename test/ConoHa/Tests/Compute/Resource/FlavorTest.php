@@ -53,8 +53,10 @@ class FlavorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(65536, $item->getRam());
         $this->assertEquals(24, $item->getVcpus());
         $this->assertEquals("", $item->getSwap());
+        $this->assertEquals(50, $item->getDisk());
         $this->assertEquals(true, $item->getOsFlavorAccessIsPublic());
         $this->assertEquals(1, $item->getRxtxFactor());
+        $this->assertEquals(null, $item->getOsFlvDataEphemeral());
         $this->assertEquals(0, $item->getOsFlvDisabled());
         $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
     }
