@@ -8,6 +8,13 @@ use ConoHa\Compute\Resource\Flavor;
 
 class Service extends BaseService
 {
+    /**
+     * VMのプラン(flavor)を一覧取得する
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/compute-get_flavors_list.html
+     * @return \ConoHa\Common\ResourceCollection
+     */
     public function flavors(
         $minDisk = null,
         $minRam  = null,
