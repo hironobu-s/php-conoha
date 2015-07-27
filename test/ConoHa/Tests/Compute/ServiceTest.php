@@ -43,15 +43,46 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testFlavorsDetail()
     {
-        $col = self::$service->flavorsDetail();
+        $col = self::$service->flavors(true);
         $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
         if(count($col) > 0) {
-            $this->assertInstanceOf('ConoHa\Compute\Resource\Flavor', $col[0]);
-            $this->assertInternalType('string', $col[0]->getId());
-            $this->assertInternalType('bool', $col[0]->getOsFlvDisabled());
+            $item = $col[0];
+            $this->assertInstanceOf('ConoHa\Compute\Resource\Flavor', $item);
+            $this->assertNotNull($item->getId());
+            $this->assertNotNull($item->getName());
+            $this->assertNotNull($item->getRam());
+            $this->assertNotNull($item->getVcpus());
+            $this->assertNotNull($item->getSwap());
+            $this->assertNotNull($item->getDisk());
+            $this->assertNotNull($item->getOsFlavorAccessIsPublic());
+            $this->assertNotNull($item->getRxtxFactor());
+            $this->assertNotNull($item->getOsFlvDataEphemeral());
+            $this->assertNotNull($item->getOsFlvDisabled());
+            $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
         } else {
             $this->markTestImcomplete('The number of order-items is 0.');
         }
         return $col;
+    }
+
+    public function testFlavor()
+    {
+        $col = self::$service->flavors();
+        if(count($col) == 0) {
+            $this->markTestImcomplete('The number of order-items is 0.');
+        }
+
+        $item = self::$service->flavor($col[0]->getId());
+            $this->assertNotNull($item->getId());
+            $this->assertNotNull($item->getName());
+            $this->assertNotNull($item->getRam());
+            $this->assertNotNull($item->getVcpus());
+            $this->assertNotNull($item->getSwap());
+            $this->assertNotNull($item->getDisk());
+            $this->assertNotNull($item->getOsFlavorAccessIsPublic());
+            $this->assertNotNull($item->getRxtxFactor());
+            $this->assertNotNull($item->getOsFlvDataEphemeral());
+            $this->assertNotNull($item->getOsFlvDisabled());
+            $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
     }
 }
