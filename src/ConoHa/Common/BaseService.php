@@ -4,6 +4,7 @@ namespace ConoHa\Common;
 
 use ConoHa\Api\Client;
 use ConoHa\Identity\Resource\Token;
+use ConoHa\Validator\Validator;
 use ConoHa\Common\Resource\Versions;
 use ConoHa\Common\Resource\Version;
 
@@ -41,6 +42,12 @@ abstract class BaseService extends Object
 
         return $client;
     }
+
+    public function getValidator()
+    {
+        return new Validator();
+    }
+
 
     protected $endpoint;
     public function setEndpoint($endpoint)
