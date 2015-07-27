@@ -31,7 +31,8 @@ class FloatTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateOk()
     {
-        $this->type->validate(0.0);
+        $val = $this->type->validate(0.0);
+        $this->assertSame(0.0, $val);
     }
 
     /**

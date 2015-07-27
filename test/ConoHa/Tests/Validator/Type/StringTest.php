@@ -32,10 +32,14 @@ class StringTest extends \PHPUnit_Framework_TestCase
     public function testValidateOk()
     {
         $this->type->setNullOk(true);
-        $this->type->validate("");
-        $this->type->validate("hoge");
-        $this->type->validate(" fuga ");
-        $this->type->validate("日本語");
+        $val = $this->type->validate("");
+        $this->assertSame("", $val);
+        $val = $this->type->validate("hoge");
+        $this->assertSame("hoge", $val);
+        $val = $this->type->validate(" fuga ");
+        $this->assertSame(" fuga ", $val);
+        $val = $this->type->validate("日本語");
+        $this->assertSame("日本語", $val);
     }
 
     /**

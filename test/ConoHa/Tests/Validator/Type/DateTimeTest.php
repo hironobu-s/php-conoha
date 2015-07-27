@@ -31,7 +31,9 @@ class DateTimeTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateOk()
     {
-        $this->type->validate(new \DateTime());
+        $d = new \DateTime();
+        $val = $this->type->validate($d);
+        $this->assertSame($d->format('c'), $val);
     }
 
     /**

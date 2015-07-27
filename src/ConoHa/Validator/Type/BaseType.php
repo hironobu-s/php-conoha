@@ -51,15 +51,27 @@ abstract class BaseType
     }
 
     /**
-     * 値を検証する
+     * 値を検証してフォーマットした値を返す
      *
      * @param  mixed $value
-     * @return void
+     * @return mixed
      */
     public function validate($value)
     {
         if(!$this->getNullOk() && is_null($value)) {
             throw new ValidatorException('The value shoud not be null.');
         }
+        return $this->format($value);
+    }
+
+    /**
+     * 値をフォーマットする
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    protected function format($value)
+    {
+        return $value;
     }
 }

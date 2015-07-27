@@ -31,8 +31,10 @@ class IntegerTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateOk()
     {
-        $this->type->validate(0);
-        $this->type->validate(0.0);
+        $val = $this->type->validate(0);
+        $this->assertSame(0, $val);
+        $val = $this->type->validate(0.0);
+        $this->assertSame(0, $val); // intの値が返る
     }
 
     /**

@@ -5,6 +5,8 @@ namespace ConoHa\Validator;
 use ConoHa\Validator\Type\String;
 use ConoHa\Validator\Type\Integer;
 use ConoHa\Validator\Type\Float;
+use ConoHa\Validator\Type\Uuid;
+use ConoHa\Validator\Type\Datetime;
 
 class Validator
 {
@@ -13,40 +15,52 @@ class Validator
     /**
      * バリデート条件の追加
      *
-     * @param mixed $name バリデート名。配列で渡すと同じタイプで複数作成できる。
+     * @param name $name バリデート名
      * @param string $type タイプ(string, integer, float...)
      * @return ConoHa\Validator\Type\BaseType or array
      */
     public function add($name, $type)
     {
-        if(is_array($name)) {
-            $types = [];
-            foreach($name as $n) {
-                $types[$n] = $this->add($n, $type);
-            }
-            return $n;
-
-        } else {
-            switch($type) {
-                case "string":
-                    $t = new String;
-                    break;
-                case "integer":
-                case "int":
-                    $t = new Integer;
-                    break;
-                case "double":
-                case "float":
-                    $t = new Float;
-                    break;
-                default:
-                    throw new \InvalidArgumentException('Undefined type "' . $type . '".');
-            }
-
-            $this->definition[$name] = $t;
-
-            return $t;
+        switch($type) {
+            case "string":
+                $t = new String;
+                break;
+            case "integer":
+            case "int":
+                $t = new Integer;
+                break;
+            case "double":
+            case "float":
+                $t = new Float;
+                break;
+            case "uuid":
+                $t = new Uuid;
+                break;
+            case "datetime":
+                $t = new Datetime;
+                break;
+            default:
+                throw new \InvalidArgumentException('Undefined type "' . $type . '".');
         }
+
+        $this->definition[$name] = $t;
+
+        return $t;
+    }
+
+    /**
+     * まとめてAdd()する
+     *
+     * @param array $names
+     * @return array Types
+     */
+    public function build($names)
+    {
+        $types = [];
+        foreach($names as $name => $type) {
+            $types[$name] = $this->add($name, $type);
+        }
+        return $types;
     }
 
     /**
