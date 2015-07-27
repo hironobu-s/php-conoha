@@ -33,6 +33,22 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
         if(count($col) > 0) {
             $this->assertInstanceOf('ConoHa\Compute\Resource\Flavor', $col[0]);
+            $this->assertInternaltype('string', $col[0]->getId());
+            $this->assertNull($col[0]->getOsFlvDisabled());
+        } else {
+            $this->markTestImcomplete('The number of order-items is 0.');
+        }
+        return $col;
+    }
+
+    public function testFlavorsDetail()
+    {
+        $col = self::$service->flavorsDetail();
+        $this->assertInstanceOf('ConoHa\Common\ResourceCollection', $col);
+        if(count($col) > 0) {
+            $this->assertInstanceOf('ConoHa\Compute\Resource\Flavor', $col[0]);
+            $this->assertInternalType('string', $col[0]->getId());
+            $this->assertInternalType('bool', $col[0]->getOsFlvDisabled());
         } else {
             $this->markTestImcomplete('The number of order-items is 0.');
         }
