@@ -31,8 +31,10 @@ class UuidTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateOk()
     {
-        $this->type->validate("4b65666b-cc54-4b02-a20a-5a4a0f770a89");
-        $this->type->validate("C06CC11E-68D7-4072-B577-BB08251703E4");
+        $val = $this->type->validate("4b65666b-cc54-4b02-a20a-5a4a0f770a89");
+        $this->assertEquals("4b65666b-cc54-4b02-a20a-5a4a0f770a89", $val);
+        $val = $this->type->validate("C06CC11E-68D7-4072-B577-BB08251703E4");
+        $this->assertEquals("C06CC11E-68D7-4072-B577-BB08251703E4", $val);
     }
 
     /**
