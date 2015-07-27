@@ -101,8 +101,7 @@ class Validator
                 continue;
             }
 
-            $this->definition[$name]->validate($value);
-            $params[$name] = $value;
+            $params[$name] = $this->definition[$name]->validate($value);
         }
 
         return $params;
