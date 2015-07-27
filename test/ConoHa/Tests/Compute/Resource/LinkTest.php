@@ -4,13 +4,13 @@ namespace ConoHa\Test\Compute\Resource;
 
 use ConoHa\ConoHa;
 use ConoHa\Compute\Service;
-use ConoHa\Compute\Resource\FlavorLink;
+use ConoHa\Compute\Resource\Link;
 
-class FlavorLinkTest extends \PHPUnit_Framework_TestCase
+class LinkTest extends \PHPUnit_Framework_TestCase
 {
     public function testSetterGetter()
     {
-        $item = new FlavorLink();
+        $item = new Link();
         $item->setHref('test-href');
         $item->setRel('test-rel');
 
@@ -25,7 +25,7 @@ class FlavorLinkTest extends \PHPUnit_Framework_TestCase
             'rel' => 'self',
         ];
 
-        $item = new FlavorLink();
+        $item = new Link();
         $item->populate(json_decode(json_encode($data)));
 
         $this->assertEquals('https://compute.tyo1.conoha.io/v2/', $item->getHref());

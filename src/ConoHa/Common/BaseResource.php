@@ -17,6 +17,9 @@ abstract class BaseResource extends Object
     public function populate(\StdClass $res)
     {
         foreach($res as $name => $value) {
+            if(preg_match('/:([^:]+)/', $name, $m)) {
+                $name = $m[1];
+            }
             $method = "set" . self::snake2Camel($name);
             if(method_exists($this, $method)) {
                 $this->{$method}($value);

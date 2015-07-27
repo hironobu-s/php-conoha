@@ -20,25 +20,23 @@ class Service extends BaseService
      * @link https://www.conoha.jp/docs/compute-get_flavors_list.html
      * @link https://www.conoha.jp/docs/compute-get_flavors_detail.html
      *
-     * @param bool $detail   詳細情報を含めて取得する場合はtrue
-     * @param int  $min_disk (Optional)
-     * @param int  $min_ram  (Optional)
-     * @param int  $marker   (Optional)
-     * @param int  $limit    (Optional)
+     * @param bool  $detail     詳細情報を含めて取得する場合はtrue
+     * @param array $conditions (Optional)検索条件
      * @return \ConoHa\Common\ResourceCollection
      */
-    public function flavors(
-        $detail = false,
-        $min_disk = null,
-        $min_ram  = null,
-        $marker  = null,
-        $limit   = null
-    ) {
-        $names = ['min_disk', 'min_ram', 'marker', 'limit', 'hoge'];
+    public function flavors($detail = false, array $conditions = [])
+    {
+        $names         = [
+            'min_disk' => 'int',
+            'min_ram'  => 'int',
+            'marker'   => 'int',
+            'limit'    => 'int',
+            'hoge'     => 'int',
+        ];
 
         $validator = $this->getValidator();
-        $validator->add($names, 'int');
-        $query = $validator->run(compact($names));
+        $validator->build($names);
+        $query = $validator->run($conditions);
 
         if($detail) {
             $res = $this->getClient()->get($this->getUri('flavors/detail', $query));

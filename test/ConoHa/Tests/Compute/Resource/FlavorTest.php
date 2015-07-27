@@ -58,6 +58,6 @@ class FlavorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $item->getRxtxFactor());
         $this->assertEquals(null, $item->getOsFlvDataEphemeral());
         $this->assertEquals(0, $item->getOsFlvDisabled());
-        $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
+        $this->assertInstanceOf('\ConoHa\Compute\Resource\Link', $item->getLinks()[0]);
     }
 }

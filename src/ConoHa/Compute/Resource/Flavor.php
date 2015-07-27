@@ -302,7 +302,10 @@ class Flavor extends BaseResource
     public function populate(\StdClass $json)
     {
         $this->setId($json->id);
-        $this->setName($json->name);
+
+        if(isset($json->name)) {
+            $this->setName($json->name);
+        }
         if(isset($json->{"OS-FLV-DISABLED:disabled"})) {
             $this->setOsFlvDisabled($json->{"OS-FLV-DISABLED:disabled"});
         }
@@ -331,7 +334,7 @@ class Flavor extends BaseResource
 
         $links = [];
         foreach($json->links as $l) {
-            $link = new FlavorLink();
+            $link = new Link();
             $link->populate($l);
             $links[] = $link;
         }

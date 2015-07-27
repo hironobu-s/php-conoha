@@ -58,7 +58,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($item->getRxtxFactor());
             $this->assertNotNull($item->getOsFlvDataEphemeral());
             $this->assertNotNull($item->getOsFlvDisabled());
-            $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
+            $this->assertInstanceOf('\ConoHa\Compute\Resource\Link', $item->getLinks()[0]);
         } else {
             $this->markTestImcomplete('The number of order-items is 0.');
         }
@@ -83,6 +83,6 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
             $this->assertNotNull($item->getRxtxFactor());
             $this->assertNotNull($item->getOsFlvDataEphemeral());
             $this->assertNotNull($item->getOsFlvDisabled());
-            $this->assertInstanceOf('\ConoHa\Compute\Resource\FlavorLink', $item->getLinks()[0]);
+            $this->assertInstanceOf('\ConoHa\Compute\Resource\Link', $item->getLinks()[0]);
     }
 }

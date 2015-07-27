@@ -4,7 +4,7 @@ namespace ConoHa\Compute\Resource;
 
 use ConoHa\Common\BaseResource;
 
-class FlavorLink extends BaseResource
+class Link extends BaseResource
 {
 
     /**
