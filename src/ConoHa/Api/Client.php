@@ -89,7 +89,8 @@ class Client {
         }
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 
-        // debug
+        // DEBUG
+        //
         // CURLOPT_VERBOSE と　CURLINFO_HEADER_OUT は排他利用のようなので、
         // デバッグを有効にする場合はCURLINFO_HEADER_OUTをOFFにする。
         if(isset($options['debug']) && $options['debug']) {
