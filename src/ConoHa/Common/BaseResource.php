@@ -8,7 +8,7 @@ use ConoHa\Common\BaseService;
 abstract class BaseResource extends Object
 {
     /**
-     * オブジェクトのフォールドを埋める
+     * オブジェクトのフィールドを埋める
      *
      * @param $res \StdClass JSONオブジェクト
      * @reutrn void
