@@ -109,9 +109,9 @@ class Service extends BaseService
 
         $query = $validator->run($conditions);
         if($detail = true) {
-            $res = $this->getClient()->get($this->getUri(['servers', 'detail'], $query),['debug' => true]);
+            $res = $this->getClient()->get($this->getUri(['servers', 'detail'], $query));
         } else {
-            $res = $this->getClient()->get($this->getUri('servers', $query),['debug' => true]);
+            $res = $this->getClient()->get($this->getUri('servers', $query));
         }
 
         $col = new ResourceCollection();
