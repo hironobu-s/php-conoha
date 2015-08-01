@@ -73,16 +73,54 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         }
 
         $item = self::$service->flavor($col[0]->getId());
-            $this->assertNotNull($item->getId());
-            $this->assertNotNull($item->getName());
-            $this->assertNotNull($item->getRam());
-            $this->assertNotNull($item->getVcpus());
-            $this->assertNotNull($item->getSwap());
-            $this->assertNotNull($item->getDisk());
-            $this->assertNotNull($item->getOsFlavorAccessIsPublic());
-            $this->assertNotNull($item->getRxtxFactor());
-            $this->assertNotNull($item->getOsFlvDataEphemeral());
-            $this->assertNotNull($item->getOsFlvDisabled());
-            $this->assertInstanceOf('\ConoHa\Compute\Resource\Link', $item->getLinks()[0]);
+        $this->assertNotNull($item->getId());
+        $this->assertNotNull($item->getName());
+        $this->assertNotNull($item->getRam());
+        $this->assertNotNull($item->getVcpus());
+        $this->assertNotNull($item->getSwap());
+        $this->assertNotNull($item->getDisk());
+        $this->assertNotNull($item->getOsFlavorAccessIsPublic());
+        $this->assertNotNull($item->getRxtxFactor());
+        $this->assertNotNull($item->getOsFlvDataEphemeral());
+        $this->assertNotNull($item->getOsFlvDisabled());
+        $this->assertInstanceOf('\ConoHa\Compute\Resource\Link', $item->getLinks()[0]);
+    }
+
+    public function testServers()
+    {
+        //$this->markTestSkipped('Not implementation yet.');
+        $col = self::$service->servers();
+
+        $item = $col[0];
+
+        $this->assertNotNull($item->getDiskconfig());
+        $this->assertNotNull($item->getAvailabilityZone());
+        $this->assertNotNull($item->getHost());
+        $this->assertNotNull($item->getHypervisorHostname());
+        $this->assertNotNull($item->getInstanceName());
+        $this->assertNotNull($item->getPowerState());
+        //$this->assertNotNull($item->getTaskState());
+        $this->assertNotNull($item->getVmState());
+        $this->assertNotNull($item->getLaunchedAt());
+        //$this->assertNotNull($item->getTerminatedAt());
+        $this->assertNotNull($item->getAccessIpv4());
+        $this->assertNotNull($item->getAccessIpv6());
+        $this->assertNotNull($item->getAddresses());
+        $this->assertNotNull($item->getConfigDrive());
+        $this->assertNotNull($item->getCreated());
+        $this->assertNotNull($item->getFlavor());
+        $this->assertNotNull($item->getHostId());
+        $this->assertNotNull($item->getId());
+        $this->assertNotNull($item->getImage());
+        $this->assertNotNull($item->getKeyname());
+        $this->assertNotNull($item->getLinks());
+        $this->assertNotNull($item->getMetadata());
+        $this->assertNotNull($item->getName());
+        $this->assertNotNull($item->getVolumesAttached());
+        $this->assertNotNull($item->getSecurityGroups());
+        $this->assertNotNull($item->getStatus());
+        $this->assertNotNull($item->getTenantId());
+        $this->assertNotNull($item->getUpdated());
+        $this->assertNotNull($item->getUserId());
     }
 }

@@ -5,6 +5,7 @@ namespace ConoHa\Compute;
 use ConoHa\Common\BaseService;
 use ConoHa\Common\ResourceCollection;
 use ConoHa\Compute\Resource\Flavor;
+use ConoHa\Compute\Resource\Server;
 
 /**
  * ConoHa Compute Service.
@@ -71,4 +72,52 @@ class Service extends BaseService
         return $item;
     }
 
+
+    /**
+     * VM一覧を取得する
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/compute-get_vms_list.html
+     *
+     * @param bool $detail      trueをセットするとVMの詳細情報を含めて一覧を取得しますが、少し時間がかかる場合があります。
+     * @param array $conditions VM一覧を絞り込む条件を指定します
+     *                            'changes-since' => 'datetime',
+     *                            'image'         => 'uuid',
+     *                            'flavor'        => 'uuid',
+     *                            'name'          => 'string',
+     *                            'marker'        => 'string',
+     *                            'host'          => 'string',
+     *                            'limit'         => 'int',
+     *                            'status'        => 'string',
+     * @return \ConoHa\Common\ResourceCollection
+     */
+    public function servers($detail = false, $conditions = [])
+    {
+        $names = [
+            'changes-since' => 'datetime',
+            'image'         => 'uuid',
+            'flavor'        => 'uuid',
+            'name'          => 'string',
+            'marker'        => 'string',
+            'host'          => 'string',
+            'limit'         => 'int',
+            'status'        => 'string',
+        ];
+
+        $validator = $this->getValidator();
+        $validator->build($names);
+
+        $query = $validator->run($conditions);
+        if($detail = true) {
+            $res = $this->getClient()->get($this->getUri(['servers', 'detail'], $query),['debug' => true]);
+        } else {
+            $res = $this->getClient()->get($this->getUri('servers', $query),['debug' => true]);
+        }
+
+        $col = new ResourceCollection();
+        $item = new Server();
+
+        $col->fill($item, $res->getJson()->servers);
+        return $col;
+    }
 }
