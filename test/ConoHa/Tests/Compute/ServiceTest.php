@@ -123,4 +123,44 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($item->getUpdated());
         $this->assertNotNull($item->getUserId());
     }
+
+    public function testServer()
+    {
+        $col = self::$service->servers();
+        if(count($col) == 0) {
+            $this->markTestImcomplete('The number of order-items is 0.');
+        }
+
+        $item = self::$service->server($col[0]->getId());
+
+        $this->assertNotNull($item->getDiskconfig());
+        $this->assertNotNull($item->getAvailabilityZone());
+        $this->assertNotNull($item->getHost());
+        $this->assertNotNull($item->getHypervisorHostname());
+        $this->assertNotNull($item->getInstanceName());
+        $this->assertNotNull($item->getPowerState());
+        //$this->assertNotNull($item->getTaskState());
+        $this->assertNotNull($item->getVmState());
+        $this->assertNotNull($item->getLaunchedAt());
+        //$this->assertNotNull($item->getTerminatedAt());
+        $this->assertNotNull($item->getAccessIpv4());
+        $this->assertNotNull($item->getAccessIpv6());
+        $this->assertNotNull($item->getAddresses());
+        $this->assertNotNull($item->getConfigDrive());
+        $this->assertNotNull($item->getCreated());
+        $this->assertNotNull($item->getFlavor());
+        $this->assertNotNull($item->getHostId());
+        $this->assertNotNull($item->getId());
+        $this->assertNotNull($item->getImage());
+        $this->assertNotNull($item->getKeyname());
+        $this->assertNotNull($item->getLinks());
+        $this->assertNotNull($item->getMetadata());
+        $this->assertNotNull($item->getName());
+        $this->assertNotNull($item->getVolumesAttached());
+        $this->assertNotNull($item->getSecurityGroups());
+        $this->assertNotNull($item->getStatus());
+        $this->assertNotNull($item->getTenantId());
+        $this->assertNotNull($item->getUpdated());
+        $this->assertNotNull($item->getUserId());
+    }
 }

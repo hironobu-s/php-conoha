@@ -120,4 +120,22 @@ class Service extends BaseService
         $col->fill($item, $res->getJson()->servers);
         return $col;
     }
+
+    /**
+     * VM詳細を取得する(アイテム指定)
+     *
+     * @api
+     * @link https://www.conoha.jp/docs/compute-get_vms_detail_specified.html
+     *
+     * @param string $server_id
+     * @return \ConoHa\Common\ResourceCollection
+     */
+    public function server($server_id)
+    {
+        $res = $this->getClient()->get($this->getUri(['servers', $server_id]));
+        $item = new Server();
+        $item->populate($res->getJson()->server);
+
+        return $item;
+    }
 }
